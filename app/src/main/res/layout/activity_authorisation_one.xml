@@ -22,7 +22,7 @@
 			android:text="Получить код"
 			android:layout_width="200dp"
 			android:layout_height="50dp"
-			android:id="@+id/getCodeButton"
+			android:id="@+id/continueButton"
 			android:background="@drawable/login_button"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

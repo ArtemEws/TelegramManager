@@ -17,22 +17,20 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorisation_one);
 
-        Button getCodeButton = findViewById(R.id.getCodeButton);
+        Button continueButton = findViewById(R.id.continueButton);
         EditText phoneNumberField = findViewById(R.id.phoneNumberField);
-        getCodeButton.setOnClickListener(getCodeButtonClickListener);
+        continueButton.setOnClickListener(continueButtonClickListener);
     }
 
-    private View.OnClickListener getCodeButtonClickListener = new View.OnClickListener() {
+    private View.OnClickListener continueButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            EditText phoneNumberField = findViewById(R.id.phoneNumberField);
-//            phoneNumberField.setText("lol, it work (/ ^_^)/");
             startMainActivity();
         }
     };
 
     public void startMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, CodeActivity.class);
         startActivity(intent);
     }
 }
