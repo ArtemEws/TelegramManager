@@ -15,7 +15,7 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authorization);
+        setContentView(R.layout.activity_authorisation_one);
 
         Button getCodeButton = findViewById(R.id.getCodeButton);
         EditText phoneNumberField = findViewById(R.id.phoneNumberField);
