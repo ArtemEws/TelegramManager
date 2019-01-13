@@ -5,18 +5,27 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activities.FirstActivity">
-
+        tools:context=".Activities.FirstActivity"
+        android:background="@color/colorPrimaryDark">
+    <ImageView
+            android:layout_height="150dp"
+            android:layout_width="332dp"
+            android:background="@drawable/text_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton"
+            app:layout_constraintTop_toTopOf="parent"/>
     <Button
-            android:text="Войти"
+            android:text="Начать"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:id="@+id/loginButton"
             android:background="@drawable/login_button"
+            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="100dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginBottom="100dp"
+    />
 
 </android.support.constraint.ConstraintLayout>
