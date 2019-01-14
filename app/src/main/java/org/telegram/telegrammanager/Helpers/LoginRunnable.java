@@ -1,11 +1,6 @@
-package org.telegram.telegramchanelmaster.Helpers;
+package org.telegram.telegrammanager.Helpers;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-
-import java.util.concurrent.Callable;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class LoginRunnable implements Runnable {
 

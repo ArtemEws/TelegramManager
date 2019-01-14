@@ -1,13 +1,13 @@
-package org.telegram.telegramchanelmaster;
+package org.telegram.telegrammanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import org.telegram.telegramchanelmaster.Activities.FirstActivity;
-import org.telegram.telegramchanelmaster.Activities.LoginActivity;
-import org.telegram.telegramchanelmaster.Helpers.LoginRunnable;
+import org.telegram.telegramchanelmaster.R;
+import org.telegram.telegrammanager.Activities.FirstActivity;
+import org.telegram.telegrammanager.Helpers.LoginRunnable;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package org.telegram.telegramchanelmaster.Activities;
+package org.telegram.telegrammanager.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.telegram.telegramchanelmaster.MainActivity;
 import org.telegram.telegramchanelmaster.R;
 
 public class LoginActivity extends AppCompatActivity{
