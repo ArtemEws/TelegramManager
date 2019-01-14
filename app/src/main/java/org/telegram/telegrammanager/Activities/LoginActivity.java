@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.telegram.telegramchanelmaster.R;
+import org.telegram.telegrammanager.R;
 
 public class LoginActivity extends AppCompatActivity{
 

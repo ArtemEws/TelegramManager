@@ -1,4 +1,4 @@
-package org.telegram.telegramchanelmaster
+package org.telegram.telegrammanager
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

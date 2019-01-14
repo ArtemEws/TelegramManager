@@ -1,4 +1,4 @@
-package org.telegram.telegramchanelmaster
+package org.telegram.telegrammanager
 
 import org.junit.Test
 

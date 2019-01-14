@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import org.telegram.telegrammanager.MainActivity;
-import org.telegram.telegramchanelmaster.R;
+import org.telegram.telegrammanager.R;
 
 public class CodeActivity extends AppCompatActivity {
 
