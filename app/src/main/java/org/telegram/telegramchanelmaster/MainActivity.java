@@ -1,14 +1,13 @@
 package org.telegram.telegramchanelmaster;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import org.telegram.telegramchanelmaster.Activities.FirstActivity;
 import org.telegram.telegramchanelmaster.Activities.LoginActivity;
 import org.telegram.telegramchanelmaster.Helpers.LoginRunnable;
-import org.telegram.telegramchanelmaster.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,20 +21,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 //      check if user loged into app by thread, to avoid ui lags
-        mSettings = getPreferences(MODE_PRIVATE);
-        LoginRunnable checkForAuthorised = new LoginRunnable();
-        Thread loginThread = new Thread(checkForAuthorised);
-        try {
-            loginThread.join();
-        } catch (InterruptedException e) {
-            Log.e(AUTH_EXEP_TAG, "LoginThread didn't join to UI Thread on Start");
-        }
-        if(!checkForAuthorised.getIsAuthorised()){
+//        mSettings = getPreferences(MODE_PRIVATE);
+//        LoginRunnable checkForAuthorised = new LoginRunnable();
+//        Thread loginThread = new Thread(checkForAuthorised);
+//        try {
+//            loginThread.join();
+//        } catch (InterruptedException e) {
+//            Log.e(AUTH_EXEP_TAG, "LoginThread didn't join to UI Thread on Start");
+//        }
+//        if(!checkForAuthorised.getIsAuthorised()){
             goToLogin();
-        }
+//        }
+
     }
 
     @Override
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToLogin() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, FirstActivity.class);
         startActivity(intent);
     }
 }
