@@ -27,5 +27,15 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="100dp"
     />
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/cl"
+            android:id="@+id/imageView4"
+            android:scaleType="fitEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
 
 </android.support.constraint.ConstraintLayout>
