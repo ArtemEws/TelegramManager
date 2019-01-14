@@ -24,7 +24,7 @@ public class FirstActivity extends AppCompatActivity {
         });
     }
 
-    public void startNextActivity() {
+    private void startNextActivity() {
         Intent intent = new Intent(FirstActivity.this, LoginActivity.class);
         startActivity(intent);
     }

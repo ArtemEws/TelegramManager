@@ -28,14 +28,8 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    private View.OnClickListener continueButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            startNextActivity();
-        }
-    };
 
-    public void startNextActivity() {
+    private void startNextActivity() {
         Intent intent = new Intent(LoginActivity.this, CodeActivity.class);
         startActivity(intent);
     }

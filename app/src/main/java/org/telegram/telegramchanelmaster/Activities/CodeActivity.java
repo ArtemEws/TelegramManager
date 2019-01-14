@@ -24,7 +24,7 @@ public class CodeActivity extends AppCompatActivity {
         });
     }
 
-    public void startNextActivity() {
+    private void startNextActivity() {
         Intent intent = new Intent(CodeActivity.this, MainActivity.class);
         startActivity(intent);
     }
