@@ -3,7 +3,6 @@
 *.ap_
 *.aab
 
-
 # Files for the ART/Dalvik VM
 *.dex
 
@@ -49,14 +48,11 @@ captures/
 #*.jks
 #*.keystore
 
-
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
 # Google Services (e.g. APIs or Firebase)
-
-google-services.json
-
+# google-services.json
 
 # Freeline
 freeline.py
@@ -79,3 +75,5 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+\.idea/
