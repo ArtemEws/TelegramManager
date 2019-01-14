@@ -24,6 +24,8 @@
             android:ems="10"
             android:id="@+id/phoneNumberField"
             android:background="@drawable/edit_text_login"
+            android:digits="0123456789+"
+            android:maxLength="12"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="60dp"
