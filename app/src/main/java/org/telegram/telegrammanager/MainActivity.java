@@ -8,6 +8,9 @@ import android.util.Log;
 import org.telegram.telegrammanager.Activities.FirstActivity;
 import org.telegram.telegrammanager.Helpers.LoginRunnable;
 
+import org.drinkless.td.libcore.telegram.TdApi;
+import org.drinkless.td.libcore.telegram.Client;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String APP_PREFERENCES = "settings";
@@ -20,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Client client;
 
 //      check if user loged into app by thread, to avoid ui lags
         mSettings = getPreferences(MODE_PRIVATE);
