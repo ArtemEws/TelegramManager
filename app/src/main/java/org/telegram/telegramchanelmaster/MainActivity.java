@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//      check if user loged into app by thread, to avoid ui lags
+//      check if user logged into app by thread, to avoid ui lags
 //        mSettings = getPreferences(MODE_PRIVATE);
 //        LoginRunnable checkForAuthorised = new LoginRunnable();
 //        Thread loginThread = new Thread(checkForAuthorised);

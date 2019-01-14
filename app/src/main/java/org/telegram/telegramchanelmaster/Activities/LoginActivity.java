@@ -17,9 +17,15 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorisation_one);
 
-        Button continueButton = findViewById(R.id.continueButton);
         EditText phoneNumberField = findViewById(R.id.phoneNumberField);
-        continueButton.setOnClickListener(continueButtonClickListener);
+
+        Button continueButton = findViewById(R.id.continueButton);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNextActivity();
+            }
+        });
     }
 
     private View.OnClickListener continueButtonClickListener = new View.OnClickListener() {

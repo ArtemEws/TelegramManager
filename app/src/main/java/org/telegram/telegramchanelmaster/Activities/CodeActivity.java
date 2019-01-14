@@ -15,17 +15,14 @@ public class CodeActivity extends AppCompatActivity {
         super.onCreate(savedInstancestate);
         setContentView(R.layout.activity_authorisation_two);
 
-
         Button startButton = findViewById(R.id.startButton);
-        startButton.setOnClickListener(startButtonClickListener);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNextActivity();
+            }
+        });
     }
-
-    private View.OnClickListener startButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            startNextActivity();
-        }
-    };
 
     public void startNextActivity() {
         Intent intent = new Intent(CodeActivity.this, MainActivity.class);

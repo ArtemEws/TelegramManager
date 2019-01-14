@@ -13,19 +13,16 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_authorisation_home);
 
         Button loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(loginButtonClickListener);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNextActivity();
+            }
+        });
     }
-
-    private View.OnClickListener loginButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            startNextActivity();
-        }
-    };
 
     public void startNextActivity() {
         Intent intent = new Intent(FirstActivity.this, LoginActivity.class);
