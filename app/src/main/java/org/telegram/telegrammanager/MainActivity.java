@@ -20,18 +20,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //      check if user loged into app by thread, to avoid ui lags
-//        mSettings = getPreferences(MODE_PRIVATE);
-//        LoginRunnable checkForAuthorised = new LoginRunnable();
-//        Thread loginThread = new Thread(checkForAuthorised);
-//        try {
-//            loginThread.join();
-//        } catch (InterruptedException e) {
-//            Log.e(AUTH_EXEP_TAG, "LoginThread didn't join to UI Thread on Start");
-//        }
-//        if(!checkForAuthorised.getIsAuthorised()){
+        mSettings = getPreferences(MODE_PRIVATE);
+        LoginRunnable checkForAuthorised = new LoginRunnable();
+        Thread loginThread = new Thread(checkForAuthorised);
+        loginThread.start();
+        try {
+            loginThread.join();
+        } catch (InterruptedException e) {
+            Log.e(AUTH_EXEP_TAG, "LoginThread didn't join to UI Thread on Start");
+        }
+        if(!checkForAuthorised.getIsAuthorised()){
             goToLogin();
-//        }
+        }
 
     }
 
