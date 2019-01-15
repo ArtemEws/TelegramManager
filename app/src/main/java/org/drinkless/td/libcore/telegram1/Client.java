@@ -22,7 +22,7 @@ package org.drinkless.td.libcore.telegram1;
 
 import android.util.Log;
 
-import com.madpixels.tgadmintools.BuildConfig;
+import org.telegram.telegrammanager.BuildConfig;
 
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
