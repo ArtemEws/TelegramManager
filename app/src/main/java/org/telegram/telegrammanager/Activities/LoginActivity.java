@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity{
         Button continueButton = findViewById(R.id.continueButton);
         EditText phoneNumberField = findViewById(R.id.phoneNumberField);
         continueButton.setOnClickListener(continueButtonClickListener);
+        phoneNumberField.setText("+7");
     }
 
     private View.OnClickListener continueButtonClickListener = new View.OnClickListener() {
