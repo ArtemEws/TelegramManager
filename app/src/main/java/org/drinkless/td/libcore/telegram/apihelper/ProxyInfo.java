@@ -1,4 +1,4 @@
-package org.drinkless.tdlib.apihelper;
+package org.drinkless.td.libcore.telegram.apihelper;
 
 public class ProxyInfo {
     public static String server = "91.188.243.144";

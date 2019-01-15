@@ -10,6 +10,10 @@ import org.telegram.telegrammanager.R;
 
 public class CodeActivity extends AppCompatActivity {
 
+    static{
+        System.loadLibrary("tdjni");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstancestate){
         super.onCreate(savedInstancestate);

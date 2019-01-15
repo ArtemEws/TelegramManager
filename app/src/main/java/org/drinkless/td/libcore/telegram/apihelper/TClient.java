@@ -1,7 +1,7 @@
-package org.drinkless.tdlib.apihelper;
+package org.drinkless.td.libcore.telegram.apihelper;
 
-import org.drinkless.tdlib.Client;
-import org.drinkless.tdlib.TdApi;
+import org.drinkless.td.libcore.telegram.Client;
+import org.drinkless.td.libcore.telegram.TdApi;
 
 public class TClient {
 

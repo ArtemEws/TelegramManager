@@ -1,4 +1,4 @@
-package org.drinkless.tdlib.apihelper;
+package org.drinkless.td.libcore.telegram.apihelper;
 
 public interface Handler {
 

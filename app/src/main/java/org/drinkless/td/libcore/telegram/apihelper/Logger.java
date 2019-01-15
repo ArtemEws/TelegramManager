@@ -1,4 +1,4 @@
-package org.drinkless.tdlib.apihelper;
+package org.drinkless.td.libcore.telegram.apihelper;
 
 public class Logger {
     public static void log(String mes) {
