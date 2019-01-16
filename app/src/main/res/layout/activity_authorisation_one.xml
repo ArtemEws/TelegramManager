@@ -31,7 +31,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="60dp"
             android:textSize="20sp"
-            android:paddingLeft="50dp"
+            android:paddingLeft="33dp"
             android:paddingRight="20dp"
             android:textColor="@android:color/white"
             android:layout_marginBottom="180dp"
@@ -71,7 +71,7 @@
             android:layout_marginBottom="5dp"
     />
     <TextView
-            android:text="+7"
+            android:text="+"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

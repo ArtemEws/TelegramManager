@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Telegram Manager</string>
-    <string name="russian_number_prefix">+7 </string>
+    <string name="russian_number_prefix">7</string>
 </resources>

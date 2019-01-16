@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity{
 
         Button continueButton = findViewById(R.id.continueButton);
         EditText phoneNumberField = findViewById(R.id.phoneNumberField);
-        //phoneNumberField.setText(getString(R.string.russian_number_prefix));
+        phoneNumberField.setText(getString(R.string.russian_number_prefix));
         continueButton.setOnClickListener(continueButtonClickListener);
     }
 
