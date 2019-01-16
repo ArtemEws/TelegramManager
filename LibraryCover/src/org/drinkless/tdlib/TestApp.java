@@ -1,9 +1,11 @@
 package org.drinkless.tdlib;
 
 import org.drinkless.tdlib.apihelper.AuthorizationManager;
+import org.drinkless.tdlib.apihelper.Chat;
 import org.drinkless.tdlib.apihelper.TClient;
 import org.drinkless.tdlib.apihelper.Handler;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class TestApp {
@@ -25,7 +27,10 @@ class TestApp {
 	public static void main(String args[]) {
         Log.setVerbosityLevel(3);
         Log.setFilePath("test.log");
+//        Log.setVerbosityLevel(0);
         scn = new Scanner(System.in);
+        boolean closed[] = new boolean[1];
+        closed[0] = false;
         client = TClient.create((type, obj) -> {
             if (type == "authState") {
                 int state = (int)obj;
@@ -48,12 +53,22 @@ class TestApp {
                 } else if (state == AuthorizationManager.READY) {
 
                     System.out.println("You are in telegram");
-                    String s = prompt("Logout (lo) or quit (q)?");
-                    if (s == "lo") {
-                       client.authManager.logout();
-                    } else if (s == "q") {
-                        client.close();
-                    }
+
+                    ArrayList<Chat> chats;
+
+                    client.getChats(new Handler() {
+                        @Override
+                        public void handle(String type, Object obj) {
+                            if (type == "chats") {
+                                System.out.println("Каналы:");
+                                ArrayList<Chat> chats = (ArrayList<Chat>)obj;
+                                for (Chat chat : chats) {
+                                    if (chat.isChannel())
+                                        System.out.println(chat.getTitle() + " " + chat.getType());
+                                }
+                            }
+                        }
+                    });
 
                 }
             } else if (type == "ERROR") {
