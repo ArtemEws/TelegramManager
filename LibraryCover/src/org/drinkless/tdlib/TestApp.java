@@ -29,8 +29,6 @@ class TestApp {
         Log.setFilePath("test.log");
 //        Log.setVerbosityLevel(0);
         scn = new Scanner(System.in);
-        boolean closed[] = new boolean[1];
-        closed[0] = false;
         client = TClient.create((type, obj) -> {
             if (type == "authState") {
                 int state = (int)obj;
