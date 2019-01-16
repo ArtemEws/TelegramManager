@@ -9,6 +9,10 @@ import org.telegram.telegrammanager.R;
 
 public class GreetingActivity extends AppCompatActivity {
 
+    static{
+        System.loadLibrary("tdjni");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
