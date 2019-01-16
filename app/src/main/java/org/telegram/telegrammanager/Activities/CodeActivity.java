@@ -2,11 +2,16 @@ package org.telegram.telegrammanager.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import org.telegram.telegrammanager.MainActivity;
+import android.widget.EditText;
+
+import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
 import org.telegram.telegrammanager.R;
+
+import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class CodeActivity extends AppCompatActivity {
 
@@ -14,25 +19,39 @@ public class CodeActivity extends AppCompatActivity {
         System.loadLibrary("tdjni");
     }
 
+    EditText codeField;
+
     @Override
     protected void onCreate(Bundle savedInstancestate){
         super.onCreate(savedInstancestate);
-        setContentView(R.layout.activity_authorisation_two);
+        setContentView(R.layout.activity_authorisation_code);
 
-
-        Button startButton = findViewById(R.id.startButton);
-        startButton.setOnClickListener(startButtonClickListener);
+        Button codeButton = findViewById(R.id.codeButton);
+        codeButton.setOnClickListener(codeButtonClickListener);
+        codeField = findViewById(R.id.codeField);
+        tClient.setUpdatesHandler(new AfterCodeHandler());
     }
 
-    private View.OnClickListener startButtonClickListener = new View.OnClickListener() {
+    private View.OnClickListener codeButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            startNextActivity();
+            tClient.authManager.sendCode(codeField.getText().toString());
         }
     };
 
-    public void startNextActivity() {
-        Intent intent = new Intent(CodeActivity.this, MainActivity.class);
-        startActivity(intent);
+    public class AfterCodeHandler implements org.drinkless.td.libcore.telegram.apihelper.Handler {
+        @Override
+        public void handle(String type, Object obj) {
+            if (type == "authState") {
+                int state = (int) obj;
+
+                if (state == AuthorizationManager.READY) {
+                    Intent intent = new Intent(CodeActivity.this, ChatListActivity.class);
+                    startActivity(intent);
+                } else if (type == "ERROR") {
+                    System.out.println("Error occured");
+                }
+            }
+        }
     }
 }

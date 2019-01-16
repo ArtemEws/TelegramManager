@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import org.telegram.telegrammanager.R;
 
-public class FirstActivity extends AppCompatActivity {
+public class GreetingActivity extends AppCompatActivity {
 
     static{
         System.loadLibrary("tdjni");
@@ -17,7 +17,7 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_authorisation_home);
+        setContentView(R.layout.activity_authorisation_greeting);
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(loginButtonClickListener);
@@ -31,7 +31,7 @@ public class FirstActivity extends AppCompatActivity {
     };
 
     public void startNextActivity() {
-        Intent intent = new Intent(FirstActivity.this, LoginActivity.class);
+        Intent intent = new Intent(GreetingActivity.this, PhoneNumberActivity.class);
         startActivity(intent);
     }
 }

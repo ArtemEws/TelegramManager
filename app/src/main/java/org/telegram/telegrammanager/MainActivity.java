@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
 import org.drinkless.td.libcore.telegram.apihelper.Handler;
-import org.telegram.telegrammanager.Activities.FirstActivity;
+import org.telegram.telegrammanager.Activities.ChatListActivity;
+import org.telegram.telegrammanager.Activities.GreetingActivity;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
@@ -42,15 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if (state == AuthorizationManager.READY) {
                     Log.i(AUTH_EXEP_TAG, "Auth completed");
-
-                }  else if(state == AuthorizationManager.WAIT_PHONE_NUMBER){
-                    Intent intent = new Intent(MainActivity.this, FirstActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
+                    startActivity(intent);
+                } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
+                    Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
                     startActivity(intent);
                 }
 
-                else if (type == "ERROR") {
-                    System.out.println("Error occured");
-                }
+            } else if (type == "ERROR") {
+                System.out.println("Error occured");
             }
         }
     }
@@ -58,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean(APP_PREFERENCES_AUTH_STATE, isAuthorised);
-        editor.apply();
     }
 
     @Override
@@ -71,13 +69,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-//            SharedPreferences.Editor editor = mSettings.edit();
-//            editor.putInt(APP_PREFERENCES_COUNTER, mCounter);
-//            editor.apply();
     }
 
-    public void goToLogin() {
-        Intent intent = new Intent(MainActivity.this, FirstActivity.class);
-        startActivity(intent);
-    }
 }

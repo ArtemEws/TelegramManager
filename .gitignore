@@ -81,3 +81,12 @@ lint/tmp/
 \.DS_Store
 
 local.properties
+build.gradle
+gradle.properties
+gradlew
+gradlew.bat
+local.properties
+settings.gradle
+app/build.gradle
+app/proguard-rules.pro
+app/build
