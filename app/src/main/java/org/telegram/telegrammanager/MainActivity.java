@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import org.telegram.telegrammanager.Activities.FirstActivity;
+import org.telegram.telegrammanager.Activities.GreetingActivity;
 import org.telegram.telegrammanager.Helpers.LoginRunnable;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToLogin() {
-        Intent intent = new Intent(MainActivity.this, FirstActivity.class);
+        Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
         startActivity(intent);
     }
 }

@@ -9,12 +9,12 @@ import android.widget.EditText;
 
 import org.telegram.telegrammanager.R;
 
-public class LoginActivity extends AppCompatActivity{
+public class PhoneNumberActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authorisation_one);
+        setContentView(R.layout.activity_authorisation_phone);
 
         Button continueButton = findViewById(R.id.continueButton);
         EditText phoneNumberField = findViewById(R.id.phoneNumberField);
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity{
     };
 
     public void startNextActivity() {
-        Intent intent = new Intent(LoginActivity.this, CodeActivity.class);
+        Intent intent = new Intent(PhoneNumberActivity.this, CodeActivity.class);
         startActivity(intent);
     }
 }

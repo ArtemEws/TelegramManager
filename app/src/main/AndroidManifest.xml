@@ -14,7 +14,7 @@
                   android:screenOrientation="portrait">
 
 		</activity>
-        <activity android:name=".Activities.LoginActivity"
+        <activity android:name=".Activities.PhoneNumberActivity"
                   android:screenOrientation="portrait">
 
         </activity>
@@ -23,7 +23,7 @@
 
 		</activity>
 
-        <activity android:name=".Activities.FirstActivity"
+        <activity android:name=".Activities.GreetingActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

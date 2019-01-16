@@ -13,7 +13,7 @@ public class CodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstancestate){
         super.onCreate(savedInstancestate);
-        setContentView(R.layout.activity_authorisation_two);
+        setContentView(R.layout.activity_authorisation_code);
 
 
         Button startButton = findViewById(R.id.startButton);
