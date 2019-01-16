@@ -10,7 +10,5 @@
         android:id="@+id/textView"
         android:layout_width="276dp"
         android:layout_height="69dp"
-        android:text="Добро пожаловать!"
-        tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="194dp" />
+        android:text="Добро пожаловать!"/>
 </android.support.constraint.ConstraintLayout>

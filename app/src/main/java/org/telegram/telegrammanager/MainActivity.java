@@ -1,7 +1,6 @@
 package org.telegram.telegrammanager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +20,6 @@ import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_AUTH_STATE = "isAuthorised";
-    private SharedPreferences mSettings;
-    private static Boolean isAuthorised;
     private static String AUTH_EXEP_TAG = "Authorisation";
 
     static{

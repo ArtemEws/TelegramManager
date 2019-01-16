@@ -28,7 +28,7 @@ public class PhoneNumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authorisation_phone);
 
         Button continueButton = findViewById(R.id.continueButton);
-        phoneNumberField = findViewById(R.id.codeField);
+        phoneNumberField = findViewById(R.id.phoneNumberField);
         continueButton.setOnClickListener(continueButtonClickListener);
 
         tClient.setUpdatesHandler(new AfterPhoneHandler());
@@ -39,7 +39,7 @@ public class PhoneNumberActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.i("BUTTON", "button clicked");
-            tClient.authManager.sendPhoneNumber(phoneNumberField.getText().toString());
+            tClient.authManager.sendPhoneNumber("+7"+phoneNumberField.getText().toString());
         }
     };
 
