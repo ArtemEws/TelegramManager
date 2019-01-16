@@ -67,5 +67,18 @@
 
             android:layout_marginBottom="5dp"
     />
+    <TextView
+            android:text="+7"
 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/constantPrefix"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/phoneNumberField"
+            app:layout_constraintStart_toStartOf="@+id/phoneNumberField"
+            app:layout_constraintTop_toTopOf="@+id/phoneNumberField"/>
+            
 </android.support.constraint.ConstraintLayout>
