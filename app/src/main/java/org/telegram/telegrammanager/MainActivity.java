@@ -12,6 +12,10 @@ import org.drinkless.td.libcore.telegram.apihelper.Handler;
 import org.telegram.telegrammanager.Activities.ChatListActivity;
 import org.telegram.telegrammanager.Activities.GreetingActivity;
 import org.telegram.telegrammanager.Helpers.RVAdapter;
+import org.telegram.telegrammanager.Models.ChatCard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
@@ -39,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
 
-        String name = new String();
-        Integer subScore;
+        List chats = new ArrayList<ChatCard>();
+        chats.add(new ChatCard("ArtemLebedev", 24856823, 1));
+        chats.add(new ChatCard("Mr.Freeman", 27434324, 2));
+        chats.add(new ChatCard("[netstalkers]", 28424524, 3));
 
-
-        RVAdapter adapter = new RVAdapter(List);
+        RVAdapter adapter = new RVAdapter(chats);
         rv.setAdapter(adapter);
     }
 
