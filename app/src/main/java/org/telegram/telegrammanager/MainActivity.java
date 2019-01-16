@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
 import org.drinkless.td.libcore.telegram.apihelper.Handler;
 import org.telegram.telegrammanager.Activities.ChatListActivity;
 import org.telegram.telegrammanager.Activities.GreetingActivity;
+import org.telegram.telegrammanager.Helpers.RVAdapter;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
@@ -30,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
         tClient.setUpdatesHandler(new LoginHandler());
 
+        RecyclerView rv = (RecyclerView)findViewById(R.id.chats_rv);
+        rv.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+
+        String name = new String();
+        Integer subScore;
+
+
+        RVAdapter adapter = new RVAdapter(List);
+        rv.setAdapter(adapter);
     }
 
     public class LoginHandler implements Handler {
