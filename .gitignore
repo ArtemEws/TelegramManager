@@ -79,3 +79,5 @@ lint/tmp/
 \.idea/
 
 \.DS_Store
+
+local.properties

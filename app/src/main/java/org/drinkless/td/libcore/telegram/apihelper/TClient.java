@@ -48,7 +48,7 @@ public class TClient {
         return authManager;
     }
 
-    public void close() {
+    public void finalize() {
         client.send(new TdApi.Close(), null);
     }
 
