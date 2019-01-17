@@ -64,28 +64,23 @@ class TestApp {
                                     Integer j = i;
                                     Chat chat = chats.get(i);
 
+                                    TCondition cond = (ctype, cobj)->ctype == "file" && ((FileManager.File)cobj).getId() == chat.getPhotoFile().getId();
+                                    Handler handler = (htype, hobj)->{
+                                        FileManager.File file = (FileManager.File)hobj;
+                                        client.updateChat(chat, new Handler() {
+                                            @Override
+                                            public void handle(String type, Object obj) {
+                                                chats.set(j, (Chat)obj);
+                                                Chat chat = chats.get(j);
+                                                System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
+                                            }
+                                        });
+                                    };
+
                                     if (chat.isChannel()) {
+
                                         ((MultiHandler)client.frontHandler).addHandler(
-                                                new TCondition() {
-                                                    @Override
-                                                    public boolean matches(String type, Object obj) {
-                                                        return type == "file" && ((FileManager.File)obj).getId() == chat.getPhotoFile().getId();
-                                                    }
-                                                },
-                                                new Handler() {
-                                                    @Override
-                                                    public void handle(String type, Object obj) {
-                                                        FileManager.File file = (FileManager.File)obj;
-                                                        client.updateChat(chat, new Handler() {
-                                                            @Override
-                                                            public void handle(String type, Object obj) {
-                                                                chats.set(j, (Chat)obj);
-                                                                Chat chat = chats.get(j);
-                                                                System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
-                                                            }
-                                                        });
-                                                    }
-                                                }
+                                                cond, handler
                                         );
 
                                         if (!chat.hasPhoto()) {
