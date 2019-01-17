@@ -15,16 +15,4 @@ public class ChatCard {
         this.subs = subs;
         this.photoId = photoId;
     }
-
-    private List<ChatCard> chats;
-
-    // This method creates an ArrayList that has three Person objects
-    // Checkout the project associated with this tutorial on Github if
-    // you want to use the same images
-    private void initializeData() {
-        chats = new ArrayList<>();
-        chats.add(new ChatCard("2ch", 3874165, R.drawable.logo));
-        chats.add(new ChatCard("4ch", 245543, R.drawable.logo));
-        chats.add(new ChatCard("Borsch", 98786, R.drawable.logo));
-    }
 }

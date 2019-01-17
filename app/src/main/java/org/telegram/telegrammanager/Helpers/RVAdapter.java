@@ -13,43 +13,45 @@ import org.telegram.telegrammanager.R;
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder>{
+
     public static class ChatCardViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView groupName;
-        TextView groupSubScore;
-        ImageView groupImage;
+        public CardView cv;
+        public TextView groupName;
+        public TextView groupSubScore;
+        public ImageView groupImage;
 
         ChatCardViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.group_card);
-            groupName = (TextView)itemView.findViewById(R.id.group_name);
-            groupSubScore = (TextView)itemView.findViewById(R.id.group_subs_score);
-            groupImage = (ImageView)itemView.findViewById(R.id.group_image);
+            cv = (CardView) itemView.findViewById(R.id.group_card);
+            groupName = (TextView) itemView.findViewById(R.id.group_name);
+            groupSubScore = (TextView) itemView.findViewById(R.id.group_subs_score);
+            groupImage = (ImageView) itemView.findViewById(R.id.group_image);
         }
     }
 
-    List<ChatCard> chatList;
-    public RVAdapter(List<ChatCard> chatList){
-        this.chatList = chatList;
+    List<ChatCard> groupList;
+
+    public RVAdapter(List<ChatCard> groupList){
+        this.groupList = groupList;
     }
 
     @Override
     public int getItemCount() {
-        return chatList.size();
+        return groupList.size();
     }
 
     @Override
     public ChatCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.group_card, viewGroup, false);
-        ChatCardViewHolder pvh = new ChatCardViewHolder(v);
-        return pvh;
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.group_layout, viewGroup, false);
+        ChatCardViewHolder chatCardVh = new ChatCardViewHolder(v);
+        return chatCardVh;
     }
 
     @Override
-    public void onBindViewHolder(ChatCardViewHolder personViewHolder, int i) {
-        personViewHolder.groupName.setText(chatList.get(i).name);
-        personViewHolder.groupSubScore.setText(chatList.get(i).subs);
-        personViewHolder.groupImage.setImageResource(chatList.get(i).photoId);
+    public void onBindViewHolder(ChatCardViewHolder chatCardViewHolder, int i) {
+        chatCardViewHolder.groupName.setText(groupList.get(i).name);
+        chatCardViewHolder.groupSubScore.setText(groupList.get(i).subs);
+        chatCardViewHolder.groupImage.setImageResource(groupList.get(i).photoId);
     }
 
     @Override

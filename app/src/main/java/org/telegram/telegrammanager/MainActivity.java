@@ -31,20 +31,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tClient.setUpdatesHandler(new LoginHandler());
-
-        RecyclerView rv = (RecyclerView)findViewById(R.id.chats_rv);
-        rv.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
-
-        List chats = new ArrayList<ChatCard>();
-        chats.add(new ChatCard("ArtemLebedev", 24856823, 1));
-        chats.add(new ChatCard("Mr.Freeman", 27434324, 2));
-        chats.add(new ChatCard("[netstalkers]", 28424524, 3));
-
-        RVAdapter adapter = new RVAdapter(chats);
-        rv.setAdapter(adapter);
     }
 
     public class LoginHandler implements Handler {
@@ -61,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
                     startActivity(intent);
                 } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
-                    Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
                     startActivity(intent);
                 }
 
