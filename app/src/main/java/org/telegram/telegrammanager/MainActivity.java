@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
                     startActivity(intent);
                 } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
-                    Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
+                    Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
                     startActivity(intent);
                 }
 
