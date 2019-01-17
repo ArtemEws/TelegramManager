@@ -10,7 +10,7 @@ public class TClient {
 
 
     public AuthorizationManager authManager;
-    Handler frontHandler;
+    public Handler frontHandler;
     Client.ResultHandler apiHandler;
     // private User hostUser = null;
 
@@ -54,14 +54,16 @@ public class TClient {
         client.send(new TdApi.Close(), null);
     }
 
-
-
     public void getChat(long id, Handler fHandler) {
         ChatGetter.getChat(this, id, fHandler);
     }
 
     public void getChats(Handler fHandler) {
         ChatGetter.getChats(this, fHandler);
+    }
+
+    public void updateChat(Chat chat, Handler fHandler) {
+        getChat(chat.chat.id, fHandler);
     }
 
 }

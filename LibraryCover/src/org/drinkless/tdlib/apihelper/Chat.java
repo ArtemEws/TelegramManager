@@ -40,13 +40,6 @@ public class Chat {
         }
     }
 
-    public String getChatPhoto() {
-        if (chat.photo == null)
-            return null;
-
-        return chat.photo.small.local.path;
-    }
-
     public boolean isSuperGroup() {
         return chat.type.getConstructor() == TdApi.ChatTypeSupergroup.CONSTRUCTOR;
     }
@@ -56,5 +49,13 @@ public class Chat {
             return ((TdApi.ChatTypeSupergroup)chat.type).isChannel;
         }
         return false;
+    }
+
+    public FileManager.File getPhotoFile() {
+        return new FileManager.File(chat.photo.small);
+    }
+
+    public boolean hasPhoto() {
+        return chat.photo != null;
     }
 }

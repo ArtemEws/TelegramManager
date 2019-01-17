@@ -1,9 +1,6 @@
 package org.drinkless.tdlib;
 
-import org.drinkless.tdlib.apihelper.AuthorizationManager;
-import org.drinkless.tdlib.apihelper.Chat;
-import org.drinkless.tdlib.apihelper.TClient;
-import org.drinkless.tdlib.apihelper.Handler;
+import org.drinkless.tdlib.apihelper.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -52,6 +49,8 @@ class TestApp {
 
                     System.out.println("You are in telegram");
 
+                    client.setUpdatesHandler(new MultiHandler());
+
                     ArrayList<Chat> chats;
 
                     client.getChats(new Handler() {
@@ -60,9 +59,43 @@ class TestApp {
                             if (type == "chats") {
                                 System.out.println("Каналы:");
                                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
-                                for (Chat chat : chats) {
-                                    if (chat.isChannel())
-                                        System.out.println(chat.getTitle() + " " + chat.getType());
+
+                                for (int i = 0; i < chats.size(); i++) {
+                                    Integer j = i;
+                                    Chat chat = chats.get(i);
+
+                                    if (chat.isChannel()) {
+                                        ((MultiHandler)client.frontHandler).addHandler(
+                                                new TCondition() {
+                                                    @Override
+                                                    public boolean matches(String type, Object obj) {
+                                                        return type == "file" && ((FileManager.File)obj).getId() == chat.getPhotoFile().getId();
+                                                    }
+                                                },
+                                                new Handler() {
+                                                    @Override
+                                                    public void handle(String type, Object obj) {
+                                                        FileManager.File file = (FileManager.File)obj;
+                                                        client.updateChat(chat, new Handler() {
+                                                            @Override
+                                                            public void handle(String type, Object obj) {
+                                                                chats.set(j, (Chat)obj);
+                                                                Chat chat = chats.get(j);
+                                                                System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                        );
+
+                                        if (!chat.hasPhoto()) {
+                                            System.out.println(chat.getTitle() + " " + chat.getType());
+                                        } else if (chat.getPhotoFile().getLocalPath() == null || chat.getPhotoFile().getLocalPath().length() == 0)
+                                            new FileManager(client).downloadFile(chat.getPhotoFile());
+                                        else {
+                                            System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
+                                        }
+                                    }
                                 }
                             }
                         }
