@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
+import org.telegram.telegrammanager.MainActivity;
 import org.telegram.telegrammanager.R;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;

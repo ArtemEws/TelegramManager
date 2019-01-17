@@ -1,23 +1,25 @@
 package org.telegram.telegrammanager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
 import org.drinkless.td.libcore.telegram.apihelper.Handler;
 import org.telegram.telegrammanager.Activities.ChatListActivity;
 import org.telegram.telegrammanager.Activities.GreetingActivity;
+import org.telegram.telegrammanager.Helpers.RVAdapter;
+import org.telegram.telegrammanager.Models.ChatCard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String APP_PREFERENCES = "settings";
-    public static final String APP_PREFERENCES_AUTH_STATE = "isAuthorised";
-    private SharedPreferences mSettings;
-    private static Boolean isAuthorised;
     private static String AUTH_EXEP_TAG = "Authorisation";
 
     static{
@@ -29,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tClient.setUpdatesHandler(new LoginHandler());
-
     }
 
     public class LoginHandler implements Handler {

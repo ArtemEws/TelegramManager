@@ -40,7 +40,9 @@
         <activity
             android:name=".Activities.GreetingActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activities.ChatListActivity"></activity>
+        <activity android:name=".Activities.ChatListActivity"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
