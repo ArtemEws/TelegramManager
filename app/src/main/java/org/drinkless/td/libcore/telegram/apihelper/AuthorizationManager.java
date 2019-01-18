@@ -1,8 +1,8 @@
 package org.drinkless.td.libcore.telegram.apihelper;
 
-import android.os.Environment;
 import org.drinkless.td.libcore.telegram.Client;
 import org.drinkless.td.libcore.telegram.TdApi;
+import org.drinkless.tdlib.apihelper.TClient;
 
 public class AuthorizationManager implements Client.ResultHandler {
     private int authState;
@@ -40,7 +40,8 @@ public class AuthorizationManager implements Client.ResultHandler {
         switch (as.getConstructor()) {
             case TdApi.AuthorizationStateWaitTdlibParameters.CONSTRUCTOR:
                 TdApi.TdlibParameters parameters = new TdApi.TdlibParameters();
-                parameters.databaseDirectory = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TelegramManager";
+//                parameters.databaseDirectory = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TelegramManager";
+                parameters.databaseDirectory = "./TBASE";
                 parameters.useMessageDatabase = true;
                 parameters.useSecretChats = true;
                 parameters.apiId = 94575;

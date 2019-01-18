@@ -1,18 +1,21 @@
-package org.drinkless.td.libcore.telegram.apihelper;
+package org.drinkless.tdlib.apihelper;
 
 import org.drinkless.td.libcore.telegram.Client;
 import org.drinkless.td.libcore.telegram.TdApi;
+import org.drinkless.td.libcore.telegram.apihelper.*;
+
+import java.util.ArrayList;
 
 public class TClient {
 
 
 
     public AuthorizationManager authManager;
-    Handler frontHandler;
+    public Handler frontHandler;
     Client.ResultHandler apiHandler;
     // private User hostUser = null;
 
-    Client client;
+    public Client client;
     TClient() {}
     
     public static TClient create(Handler updatesHandler) {
@@ -50,6 +53,18 @@ public class TClient {
 
     public void close() {
         client.send(new TdApi.Close(), null);
+    }
+
+    public void getChat(long id, Handler fHandler) {
+        ChatGetter.getChat(this, id, fHandler);
+    }
+
+    public void getChats(Handler fHandler) {
+        ChatGetter.getChats(this, fHandler);
+    }
+
+    public void updateChat(Chat chat, Handler fHandler) {
+        getChat(chat.chat.id, fHandler);
     }
 
 }

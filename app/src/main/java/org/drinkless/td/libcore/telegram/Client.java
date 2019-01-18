@@ -1,26 +1,10 @@
-/*
- * This file is part of TD.
- *
- * TD is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * TD is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with TD.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Copyright 2014-2015 Arseny Smirnov
- *           2014-2015 Aliaksei Levin
- */
-
+//
+// Copyright Aliaksei Levin (levlam@telegram.org), Arseny Smirnov (arseny30@gmail.com) 2014-2018
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
 package org.drinkless.td.libcore.telegram;
-
-import android.util.Log;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -86,7 +70,7 @@ public final class Client implements Runnable {
 
             long queryId = currentQueryId.incrementAndGet();
             handlers.put(queryId, new Handler(resultHandler, exceptionHandler));
-            NativeClient.clientSend(nativeClientId, queryId, query);
+            nativeClientSend(nativeClientId, queryId, query);
         } finally {
             readLock.unlock();
         }
@@ -116,7 +100,7 @@ public final class Client implements Runnable {
         if (query == null) {
             throw new NullPointerException("query is null");
         }
-        return NativeClient.clientExecute(query);
+        return nativeClientExecute(query);
     }
 
     /**
@@ -151,25 +135,6 @@ public final class Client implements Runnable {
     }
 
     /**
-     * Function for benchmarking number of queries per second which can handle the TDLib, ignore it.
-     *
-     * @param query   Object representing a query to the TDLib.
-     * @param handler Result handler with onResult method which will be called with result
-     *                of the query or with TdApi.Error as parameter.
-     * @param count   Number of times to repeat the query.
-     * @throws NullPointerException if query is null.
-     */
-    public void bench(TdApi.Function query, ResultHandler handler, int count) {
-        if (query == null) {
-            throw new NullPointerException("query is null");
-        }
-
-        for (int i = 0; i < count; i++) {
-            send(query, handler);
-        }
-    }
-
-    /**
      * Overridden method from Runnable, do not call it directly.
      */
     @Override
@@ -177,7 +142,6 @@ public final class Client implements Runnable {
         while (!stopFlag) {
             receiveQueries(300.0 /*seconds*/);
         }
-        Log.d("DLTD", "Stop TDLib thread");
     }
 
     /**
@@ -192,54 +156,6 @@ public final class Client implements Runnable {
         Client client = new Client(updatesHandler, updatesExceptionHandler, defaultExceptionHandler);
         new Thread(client, "TDLib thread").start();
         return client;
-    }
-
-    /**
-     * Changes TDLib log verbosity.
-     *
-     * @param newLogVerbosity New value of log verbosity. Must be non-negative.
-     *                        Value 0 corresponds to android.util.Log.ASSERT,
-     *                        value 1 corresponds to android.util.Log.ERROR,
-     *                        value 2 corresponds to android.util.Log.WARNING,
-     *                        value 3 corresponds to android.util.Log.INFO,
-     *                        value 4 corresponds to android.util.Log.DEBUG,
-     *                        value 5 corresponds to android.util.Log.VERBOSE,
-     *                        value greater than 5 can be used to enable even more logging.
-     *                        Default value of the log verbosity is 5.
-     * @throws IllegalArgumentException if newLogVerbosity is negative.
-     */
-    public static void setLogVerbosityLevel(int newLogVerbosity) {
-        if (newLogVerbosity < 0) {
-            throw new IllegalArgumentException("newLogVerbosity can't be negative");
-        }
-        NativeClient.setLogVerbosityLevel(newLogVerbosity);
-    }
-
-    /**
-     * Sets file path for writing TDLib internal log.
-     * By default TDLib writes logs to the Android Log.
-     * Use this method to write the log to a file instead.
-     *
-     * @param filePath Path to a file for writing TDLib internal log. Use an empty path to
-     *                 switch back to logging to the Android Log.
-     * @return whether opening the log file succeeded
-     */
-    public static boolean setLogFilePath(String filePath) {
-        return NativeClient.setLogFilePath(filePath);
-    }
-
-    /**
-     * Changes maximum size of TDLib log file.
-     *
-     * @param maxFileSize Maximum size of the file to where the internal TDLib log is written
-     *                    before the file will be auto-rotated. Must be positive. Defaults to 10 MB.
-     * @throws IllegalArgumentException if max_file_size is non-positive.
-     */
-    public static void setLogMaxFileSize(long maxFileSize) {
-        if (maxFileSize <= 0) {
-            throw new IllegalArgumentException("maxFileSize should be positive");
-        }
-        NativeClient.setLogMaxFileSize(maxFileSize);
     }
 
     /**
@@ -258,81 +174,12 @@ public final class Client implements Runnable {
             while (!stopFlag) {
                 Thread.yield();
             }
-            if (handlers.size() != 1) {
-                receiveQueries(0.0);
-
-                for (Long key : handlers.keySet()) {
-                    if (key != 0) {
-                        processResult(key, new TdApi.Error(500, "Client is closed"));
-                    }
-                }
+            while (handlers.size() != 1) {
+                receiveQueries(300.0);
             }
-            NativeClient.destroyClient(nativeClientId);
+            destroyNativeClient(nativeClientId);
         } finally {
             writeLock.unlock();
-        }
-    }
-
-    /**
-     * This function is called from the JNI when a fatal error happens to provide a better error message.
-     * It shouldn't return. Do not call it directly.
-     *
-     * @param errorMessage Error message.
-     */
-    static void onFatalError(String errorMessage) {
-        final class ThrowError implements Runnable {
-            private final String errorMessage;
-
-            private ThrowError(String errorMessage) {
-                this.errorMessage = errorMessage;
-            }
-
-            @Override
-            public void run() {
-                if (isExternalError(errorMessage)) {
-                    processExternalError();
-                    return;
-                }
-
-                throw new ClientException_7("TDLib fatal error: " + errorMessage);
-            }
-
-            private void processExternalError() {
-                throw new ClientException_7("Fatal error: " + errorMessage);
-            }
-        }
-
-        new Thread(new ThrowError(errorMessage), "TDLib fatal error thread").start();
-        while (true) {
-            try {
-                Thread.sleep(1000 /* milliseconds */);
-            } catch (InterruptedException ignore) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-
-    private static boolean isDatabaseBrokenError(String message) {
-        return message.contains("Wrong key or database is corrupted") ||
-                message.contains("SQL logic error or missing database") ||
-                message.contains("database disk image is malformed") ||
-                message.contains("file is encrypted or is not a database") ||
-                message.contains("unsupported file format");
-    }
-
-    private static boolean isDiskFullError(String message) {
-        return message.contains("PosixError : No space left on device") ||
-                message.contains("[query:COMMIT] failed: database or disk is full");
-    }
-
-    private static boolean isExternalError(String message) {
-        return isDatabaseBrokenError(message) || isDiskFullError(message) ||
-                message.contains("I/O error");
-    }
-
-    private static final class ClientException_7 extends RuntimeException {
-        private ClientException_7(String message) {
-            super(message);
         }
     }
 
@@ -364,7 +211,7 @@ public final class Client implements Runnable {
     }
 
     private Client(ResultHandler updatesHandler, ExceptionHandler updateExceptionHandler, ExceptionHandler defaultExceptionHandler) {
-        nativeClientId = NativeClient.createClient();
+        nativeClientId = createNativeClient();
         handlers.put(0L, new Handler(updatesHandler, updateExceptionHandler));
         this.defaultExceptionHandler = defaultExceptionHandler;
     }
@@ -379,21 +226,19 @@ public final class Client implements Runnable {
     }
 
     private void processResult(long id, TdApi.Object object) {
+        if (object instanceof TdApi.UpdateAuthorizationState) {
+            if (((TdApi.UpdateAuthorizationState) object).authorizationState instanceof TdApi.AuthorizationStateClosed) {
+                stopFlag = true;
+            }
+        }
         Handler handler;
         if (id == 0) {
             // update handler stays forever
             handler = handlers.get(id);
-
-            if (object instanceof TdApi.UpdateAuthorizationState) {
-                if (((TdApi.UpdateAuthorizationState) object).authorizationState instanceof TdApi.AuthorizationStateClosed) {
-                    stopFlag = true;
-                }
-            }
         } else {
             handler = handlers.remove(id);
         }
         if (handler == null) {
-            Log.e("DLTD", "Can't find handler for the result " + id + " -- ignore result");
             return;
         }
 
@@ -421,10 +266,20 @@ public final class Client implements Runnable {
     }
 
     private void receiveQueries(double timeout) {
-        int resultN = NativeClient.clientReceive(nativeClientId, eventIds, events, timeout);
+        int resultN = nativeClientReceive(nativeClientId, eventIds, events, timeout);
         for (int i = 0; i < resultN; i++) {
             processResult(eventIds[i], events[i]);
             events[i] = null;
         }
     }
+
+    private static native long createNativeClient();
+
+    private static native void nativeClientSend(long nativeClientId, long eventId, TdApi.Function function);
+
+    private static native int nativeClientReceive(long nativeClientId, long[] eventIds, TdApi.Object[] events, double timeout);
+
+    private static native TdApi.Object nativeClientExecute(TdApi.Function function);
+
+    private static native void destroyNativeClient(long nativeClientId);
 }

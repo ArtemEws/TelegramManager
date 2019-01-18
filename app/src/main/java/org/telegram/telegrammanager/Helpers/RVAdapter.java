@@ -22,10 +22,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder
 
         ChatCardViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.group_card);
-            groupName = (TextView) itemView.findViewById(R.id.group_name);
-            groupSubScore = (TextView) itemView.findViewById(R.id.group_subs_score);
-            groupImage = (ImageView) itemView.findViewById(R.id.group_image);
+            cv = itemView.findViewById(R.id.group_card);
+            groupName = itemView.findViewById(R.id.group_name);
+            groupSubScore = itemView.findViewById(R.id.group_subs_score);
+            groupImage = itemView.findViewById(R.id.group_image);
         }
     }
 

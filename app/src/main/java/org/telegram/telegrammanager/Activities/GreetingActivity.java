@@ -23,12 +23,7 @@ public class GreetingActivity extends AppCompatActivity {
         loginButton.setOnClickListener(loginButtonClickListener);
     }
 
-    private View.OnClickListener loginButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            startNextActivity();
-        }
-    };
+    private View.OnClickListener loginButtonClickListener = view -> startNextActivity();
 
     public void startNextActivity() {
         Intent intent = new Intent(GreetingActivity.this, PhoneNumberActivity.class);
