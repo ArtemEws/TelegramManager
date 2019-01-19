@@ -11,9 +11,11 @@ public class Chat {
     static String NON_SPECIFIED = "NonSpecified";
 
     TdApi.Chat chat;
+    SuperGroup superGroup;
 
     Chat() {
         this.chat = null;
+        superGroup = null;
     }
 
     Chat(TdApi.Chat chat) {
@@ -57,5 +59,9 @@ public class Chat {
 
     public boolean hasPhoto() {
         return chat.photo != null;
+    }
+
+    public boolean isSuperGroupAdmin() {
+        return isSuperGroup() && superGroup.isCurrentUserAdmin();
     }
 }

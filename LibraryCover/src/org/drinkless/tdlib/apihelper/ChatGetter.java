@@ -20,7 +20,15 @@ public class ChatGetter {
                     case TdApi.Error.CONSTRUCTOR:
                         break;
                     case TdApi.Chat.CONSTRUCTOR:
-                        fHandler.handle("chat", new Chat((TdApi.Chat)object));
+                        Chat chat = new Chat((TdApi.Chat)object);
+                        if (chat.isSuperGroup()) {
+                            getSuperGroupFromChat(t, chat, ((type, obj) -> {
+                                chat.superGroup = (SuperGroup)obj;
+                                fHandler.handle("chat", chat);
+                            }));
+                        } else {
+                            fHandler.handle("chat", chat);
+                        }
                         break;
                     default:
                         break;
@@ -90,6 +98,33 @@ public class ChatGetter {
                     default:
                         break;
                 }
+            }
+        });
+    }
+
+    static void getChatMessages(TClient t, Chat chat, Handler fHandler) {
+        t.client.send(new TdApi.SearchChatMessages(chat.chat.id, "", 0, 0L, 0, 100, null), object -> {
+            if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR) {
+                TdApi.Messages messages = (TdApi.Messages)object;
+                ArrayList<Message> ret = new ArrayList<>();
+                for (TdApi.Message mes : messages.messages) {
+                    UserGetter.getUserbyId(t, mes.senderUserId, (type, obj) -> {
+                        if (type == "user") {
+                            Message message = new Message(mes);
+                            message.userFrom = (User)obj;
+                            synchronized (ret) {
+                                ret.add(message);
+                            }
+                            if (ret.size() == messages.messages.length)
+                                fHandler.handle("chatMessages", ret);
+                        } else if (type == "ERROR") {
+                            System.out.println("Error occured");
+                        }
+                    });
+                }
+                fHandler.handle("chatMessages", ret);
+            } else {
+                fHandler.handle("ERROR", null);
             }
         });
     }

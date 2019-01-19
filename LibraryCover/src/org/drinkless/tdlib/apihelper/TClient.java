@@ -54,7 +54,7 @@ public class TClient {
         client.send(new TdApi.Close(), null);
     }
 
-    public void getChat(long id, Handler fHandler) {
+    void getChat(long id, Handler fHandler) {
         ChatGetter.getChat(this, id, fHandler);
     }
 
@@ -66,4 +66,7 @@ public class TClient {
         getChat(chat.chat.id, fHandler);
     }
 
+    public void getChatMessages(Chat chat, Handler fHandler) {
+        ChatGetter.getChatMessages(this, chat, fHandler);
+    }
 }

@@ -21,6 +21,8 @@ class TestApp {
         return scn.nextLine();
     }
 
+    static Handler innerHandler = null;
+
 	public static void main(String args[]) {
         Log.setVerbosityLevel(3);
         Log.setFilePath("test.log");
@@ -51,50 +53,44 @@ class TestApp {
 
                     client.setUpdatesHandler(new MultiHandler());
 
-                    ArrayList<Chat> chats;
+                    innerHandler = (itype, iobj) -> {
+                        if (itype == "init") {
+                            client.getChats(new Handler() {
+                                @Override
+                                public void handle(String type, Object obj) {
+                                    if (type == "chats") {
+                                        System.out.println("!Каналы:");
+                                        ArrayList<Chat> chats = (ArrayList<Chat>)obj;
 
-                    client.getChats(new Handler() {
-                        @Override
-                        public void handle(String type, Object obj) {
-                            if (type == "chats") {
-                                System.out.println("Каналы:");
-                                ArrayList<Chat> chats = (ArrayList<Chat>)obj;
-
-                                for (int i = 0; i < chats.size(); i++) {
-                                    Integer j = i;
-                                    Chat chat = chats.get(i);
-
-                                    TCondition cond = (ctype, cobj)->ctype == "file" && ((FileManager.File)cobj).getId() == chat.getPhotoFile().getId();
-                                    Handler handler = (htype, hobj)->{
-                                        FileManager.File file = (FileManager.File)hobj;
-                                        client.updateChat(chat, new Handler() {
-                                            @Override
-                                            public void handle(String type, Object obj) {
-                                                chats.set(j, (Chat)obj);
-                                                Chat chat = chats.get(j);
-                                                System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
-                                            }
-                                        });
-                                    };
-
-                                    if (chat.isChannel()) {
-
-                                        ((MultiHandler)client.frontHandler).addHandler(
-                                                cond, handler
-                                        );
-
-                                        if (!chat.hasPhoto()) {
+                                        for (int i = 0; i < chats.size(); i++) {
+                                            Chat chat = chats.get(i);
                                             System.out.println(chat.getTitle() + " " + chat.getType());
-                                        } else if (chat.getPhotoFile().getLocalPath() == null || chat.getPhotoFile().getLocalPath().length() == 0)
-                                            new FileManager(client).downloadFile(chat.getPhotoFile());
-                                        else {
-                                            System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
                                         }
+
+                                        innerHandler.handle("gotchats", chats);
                                     }
                                 }
-                            }
+                            });
+                        } else if (itype == "gotchats") {
+
+                            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                            ArrayList<Chat> chats = (ArrayList<Chat>)iobj;
+                            client.getChatMessages(chats.get(0), (ctype, cobj) -> {
+                                if (ctype == "chatMessages") {
+                                    ArrayList<Message> messages = (ArrayList<Message>)cobj;
+                                    for (Message message : messages) {
+                                        if (message.getMessageContent().isText())
+                                            System.out.println(message.getUserFrom().getShortName() + " " + message.getMessageContent().getText());
+                                    }
+                                }
+                            });
                         }
-                    });
+                    };
+
+                    innerHandler.handle("init", null);
+
+
 
                 }
             } else if (type == "ERROR") {
