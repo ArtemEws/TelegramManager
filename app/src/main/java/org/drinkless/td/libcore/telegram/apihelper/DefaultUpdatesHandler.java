@@ -1,7 +1,7 @@
-package org.drinkless.td.libcore.telegram.apihelper;
+package org.drinkless.tdlib.apihelper;
 
-import org.drinkless.td.libcore.telegram.Client;
-import org.drinkless.td.libcore.telegram.TdApi;
+import org.drinkless.tdlib.Client;
+import org.drinkless.tdlib.TdApi;
 
 public class DefaultUpdatesHandler implements Client.ResultHandler {
     TClient host;
@@ -18,6 +18,16 @@ public class DefaultUpdatesHandler implements Client.ResultHandler {
                 break;
             case TdApi.UpdateAuthorizationState.CONSTRUCTOR:
                 host.authManager.onResult(( (TdApi.UpdateAuthorizationState)object).authorizationState);
+                break;
+            case TdApi.UpdateFile.CONSTRUCTOR:
+                TdApi.File file = ((TdApi.UpdateFile)object).file;
+                FileManager.File f = new FileManager.File(file);
+                if (file.local.isDownloadingCompleted)
+                    host.getUpdatesHandler().handle("file", f);
+                break;
+            default:
+                break;
+
         }
     }
 }
