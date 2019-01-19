@@ -4,6 +4,7 @@ import org.drinkless.tdlib.Client;
 import org.drinkless.tdlib.TdApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ChatGetter {
 
@@ -52,6 +53,8 @@ public class ChatGetter {
                                 Chat chat = (Chat) chatObject;
                                 chats.add(chat);
                                 if (chats.size() == ids.size()) {
+                                    Collections.sort(chats);
+                                    Collections.reverse(chats);
                                     fHandler.handle("chats", chats);
                                 }
                             }

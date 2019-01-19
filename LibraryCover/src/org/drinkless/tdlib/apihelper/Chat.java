@@ -2,7 +2,7 @@ package org.drinkless.tdlib.apihelper;
 
 import org.drinkless.tdlib.TdApi;
 
-public class Chat {
+public class Chat implements Comparable{
 
     static String BASIC_GROUP = "BasicGroup";
     static String PRIVATE = "Private";
@@ -63,5 +63,14 @@ public class Chat {
 
     public boolean isSuperGroupAdmin() {
         return isSuperGroup() && superGroup.isCurrentUserAdmin();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Chat c = (Chat)o;
+        if (chat.order < c.chat.order) return -1;
+        if (chat.order > c.chat.order) return 1;
+
+        return 0;
     }
 }
