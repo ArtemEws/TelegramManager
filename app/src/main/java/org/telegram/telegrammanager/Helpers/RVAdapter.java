@@ -1,5 +1,7 @@
 package org.telegram.telegrammanager.Helpers;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder
 
         ChatCardViewHolder(View itemView) {
             super(itemView);
+
             cv = (CardView) itemView.findViewById(R.id.group_card);
             groupName = (TextView) itemView.findViewById(R.id.group_name);
             groupSubScore = (TextView) itemView.findViewById(R.id.group_subs_score);
@@ -29,7 +32,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder
         }
     }
 
-    List<ChatCard> groupList;
+    public List<ChatCard> groupList;
 
     public RVAdapter(List<ChatCard> groupList){
         this.groupList = groupList;
@@ -41,8 +44,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder
     }
 
     @Override
-    public ChatCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.group_layout, viewGroup, false);
+    public ChatCardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Context context = viewGroup.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.group_layout, viewGroup, false);
         ChatCardViewHolder chatCardVh = new ChatCardViewHolder(v);
         return chatCardVh;
     }
@@ -50,7 +55,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder
     @Override
     public void onBindViewHolder(ChatCardViewHolder chatCardViewHolder, int i) {
         chatCardViewHolder.groupName.setText(groupList.get(i).name);
-        chatCardViewHolder.groupSubScore.setText(groupList.get(i).subs);
+        chatCardViewHolder.groupSubScore.setText(groupList.get(i).subs.toString());
         chatCardViewHolder.groupImage.setImageResource(groupList.get(i).photoId);
     }
 

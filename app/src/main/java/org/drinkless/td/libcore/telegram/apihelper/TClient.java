@@ -8,6 +8,8 @@ public class TClient {
 
 
     public AuthorizationManager authManager;
+    public ConnectionManager connectionManager;
+
     Handler frontHandler;
     Client.ResultHandler apiHandler;
     // private User hostUser = null;
@@ -18,22 +20,22 @@ public class TClient {
     public static TClient create(Handler updatesHandler) {
 
         TClient cl = new TClient();
+        cl.connectionManager = new ConnectionManager(cl);
         cl.authManager = new AuthorizationManager(cl);
         cl.apiHandler = new DefaultUpdatesHandler(cl);
         cl.frontHandler = updatesHandler;
         cl.client = Client.create(cl.apiHandler, null, null);
 
-        String server = "91.188.243.144";
-        int port = 9096;
-        String username = "rRkV7D";
-        String password = "JcaK38";
+        String server = ProxyInfo.server;
+        int port = ProxyInfo.port;
+        String secret = ProxyInfo.secret;
 
-        cl.addProxy(server, port, username, password);
+        cl.addProxy(server, port, secret);
         return cl;
     }
 
-    public void addProxy(String server, int port, String login, String password) {
-        client.send(new TdApi.AddProxy(server, port, true, new TdApi.ProxyTypeHttp(login, password, false)), null);
+    public void addProxy(String server, int port, String secret) {
+        client.send(new TdApi.AddProxy(server, port, true, new TdApi.ProxyTypeMtproto(secret)), null);
     }
 
     public void setUpdatesHandler(Handler newHandler) {
@@ -43,9 +45,11 @@ public class TClient {
     public Handler getUpdatesHandler() {
         return frontHandler;
     }
-
     public AuthorizationManager getAuthManager() {
         return authManager;
+    }
+    public ConnectionManager getConnectionManager(){
+        return connectionManager;
     }
 
     public void close() {
