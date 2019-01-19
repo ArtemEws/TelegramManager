@@ -10,7 +10,7 @@ public class TClient {
     public AuthorizationManager authManager;
     public ConnectionManager connectionManager;
 
-    Handler frontHandler;
+    public Handler frontHandler;
     Client.ResultHandler apiHandler;
     // private User hostUser = null;
 
@@ -45,15 +45,25 @@ public class TClient {
     public Handler getUpdatesHandler() {
         return frontHandler;
     }
+
     public AuthorizationManager getAuthManager() {
         return authManager;
-    }
-    public ConnectionManager getConnectionManager(){
-        return connectionManager;
     }
 
     public void close() {
         client.send(new TdApi.Close(), null);
+    }
+
+    public void getChat(long id, Handler fHandler) {
+        ChatGetter.getChat(this, id, fHandler);
+    }
+
+    public void getChats(Handler fHandler) {
+        ChatGetter.getChats(this, fHandler);
+    }
+
+    public void updateChat(Chat chat, Handler fHandler) {
+        getChat(chat.chat.id, fHandler);
     }
 
 }
