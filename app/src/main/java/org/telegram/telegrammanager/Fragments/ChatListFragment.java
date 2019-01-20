@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.Helpers.ChatListAdapter;
 import org.telegram.telegrammanager.Models.ChatCard;
@@ -62,11 +63,9 @@ public class ChatListFragment extends Fragment {
                     if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
                         counter++;
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
-                        adapter.notifyItemChanged(counter, null);
+                        adapter.notifyItemInserted(counter);
                     }
                 }
-
-                adapter.notifyItemChanged(0, null);
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }
