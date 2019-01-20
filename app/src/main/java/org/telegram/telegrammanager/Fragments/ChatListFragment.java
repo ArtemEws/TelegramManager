@@ -22,7 +22,7 @@ import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 public class ChatListFragment extends Fragment {
 
     private Context context;
-
+    private Integer counter;
     public ChatListFragment(){
     }
 
@@ -48,19 +48,25 @@ public class ChatListFragment extends Fragment {
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
+        ChatListAdapter adapter = new ChatListAdapter(context, groups);
+
+        rv.setAdapter(adapter);
+
+        counter = 0;
+
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
 
                 for(Chat chat : chats){
                     if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
+                        counter++;
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
+                        adapter.notifyItemChanged(counter, null);
                     }
                 }
 
-                ChatListAdapter adapter = new ChatListAdapter(context, groups);
-                rv.setAdapter(adapter);
-                
+                adapter.notifyItemChanged(0, null);
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }
@@ -68,9 +74,4 @@ public class ChatListFragment extends Fragment {
 
         return view;
         }
-
-    @UiThread
-    protected void dataSetChanged(ChatListAdapter adapter) {
-        adapter.notifyDataSetChanged();
-    }
 }
