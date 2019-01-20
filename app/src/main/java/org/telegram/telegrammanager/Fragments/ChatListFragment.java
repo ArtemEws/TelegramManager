@@ -16,6 +16,7 @@ import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
@@ -48,6 +49,8 @@ public class ChatListFragment extends Fragment {
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
+        AtomicBoolean done = new AtomicBoolean(false);
+
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
@@ -60,11 +63,14 @@ public class ChatListFragment extends Fragment {
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 rv.setAdapter(adapter);
+                done.set(true);
                 
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }
         });
+
+        while (!done.get()) {}
 
         return view;
         }
