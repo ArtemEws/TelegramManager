@@ -1,6 +1,5 @@
 package org.drinkless.td.libcore.telegram.apihelper;
 
-import android.os.Build;
 import android.os.Environment;
 import org.drinkless.td.libcore.telegram.Client;
 import org.drinkless.td.libcore.telegram.TdApi;
@@ -44,11 +43,11 @@ public class AuthorizationManager implements Client.ResultHandler {
                 parameters.databaseDirectory = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TelegramManager";
                 parameters.useMessageDatabase = true;
                 parameters.useSecretChats = true;
-                parameters.apiId = 648877;
-                parameters.apiHash = "52578e23234a38b51542066da936acd1";
-                parameters.systemLanguageCode = "ru";
-                parameters.deviceModel = Build.MODEL;
-                parameters.systemVersion = String.valueOf(Build.VERSION.SDK_INT);
+                parameters.apiId = 94575;
+                parameters.apiHash = "a3406de8d171bb422bb6ddf3bbd800e2";
+                parameters.systemLanguageCode = "en";
+                parameters.deviceModel = "Desktop";
+                parameters.systemVersion = "Unknown";
                 parameters.applicationVersion = "1.0";
                 parameters.enableStorageOptimizer = true;
                 host.client.send(new TdApi.SetTdlibParameters(parameters), this);

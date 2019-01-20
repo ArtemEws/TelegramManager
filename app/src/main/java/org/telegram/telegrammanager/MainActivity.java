@@ -1,90 +1,41 @@
 package org.telegram.telegrammanager;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
-import org.drinkless.td.libcore.telegram.apihelper.*;
+import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
+import org.drinkless.td.libcore.telegram.apihelper.Handler;
+import org.telegram.telegrammanager.Activities.ChatListActivity;
 import org.telegram.telegrammanager.Activities.GreetingActivity;
-import org.telegram.telegrammanager.Fragments.ChatListFragment;
+import org.telegram.telegrammanager.Helpers.RVAdapter;
+import org.telegram.telegrammanager.Models.ChatCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String AUTH_EXEP_TAG = "Authorisation";
-    private static final String CONNECTION_EXEP_TAG = "Connection";
-    private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 0;
-    private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
-
-    FragmentTransaction mainFragTrans;
-
-    @NonNull
-    ChatListFragment chatList = new ChatListFragment();
+    private static String AUTH_EXEP_TAG = "Authorisation";
 
     static{
         System.loadLibrary("tdjni");
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkForPermissions();
-
-
         tClient.setUpdatesHandler(new LoginHandler());
-
-
     }
 
-//    public class ConnectionHandler implements Handler{
-//
-//        @Override
-//        public void handle(String type, Object obj){
-//
-//            if (type == "connectionState") {
-//                int state = (int) obj;
-//                TextView text = findViewById(R.id.text);
-//                switch (state){
-//                    case ConnectionManager.READY:
-//                        Log.i(CONNECTION_EXEP_TAG, "Connection completed successful");
-//                        tClient.setUpdatesHandler(new LoginHandler());
-//                        break;
-//                    case ConnectionManager.CONNECTED_TO_PROXY:
-//                        text.setText("connected to proxy");
-//                        break;
-//                    case ConnectionManager.WAITING_FOR_CONNECTION:
-//                        text.setText("waiting for connection");
-//                        break;
-//                    case ConnectionManager.CONNECTING:
-//                        text.setText("connecting...");
-//                        break;
-//                    case ConnectionManager.UPDATING:
-//                        text.setText("updating...");
-//                        break;
-//                }
-//
-//            } else if (type == "ERROR") {
-//                TextView text = findViewById(R.id.text);
-//                text.setText("error");
-//            }
-//        }
-//    }
-
     public class LoginHandler implements Handler {
-
         @Override
+
         public void handle(String type, Object obj) {
 
 
@@ -93,12 +44,8 @@ public class MainActivity extends Activity {
 
                 if (state == AuthorizationManager.READY) {
                     Log.i(AUTH_EXEP_TAG, "Auth completed");
-
-                    tClient.setUpdatesHandler(new MultiHandler());
-                    mainFragTrans = getFragmentManager().beginTransaction();
-                    mainFragTrans.replace(R.id.frgmnt, chatList);
-                    mainFragTrans.commit();
-
+                    Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
+                    startActivity(intent);
                 } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
                     Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
                     startActivity(intent);
@@ -110,35 +57,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void checkForPermissions(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
-                    && ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSIONS_READ_EXTERNAL_STORAGE);
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        PERMISSIONS_WRITE_EXTERNAL_STORAGE);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
-    }
     @Override
     protected void onPause() {
         super.onPause();

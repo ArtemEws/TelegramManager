@@ -18,16 +18,6 @@ public class DefaultUpdatesHandler implements Client.ResultHandler {
                 break;
             case TdApi.UpdateAuthorizationState.CONSTRUCTOR:
                 host.authManager.onResult(( (TdApi.UpdateAuthorizationState)object).authorizationState);
-                break;
-            case TdApi.UpdateFile.CONSTRUCTOR:
-                TdApi.File file = ((TdApi.UpdateFile)object).file;
-                FileManager.File f = new FileManager.File(file);
-                if (file.local.isDownloadingCompleted)
-                    host.getUpdatesHandler().handle("file", f);
-                break;
-            default:
-                break;
-
         }
     }
 }
