@@ -48,9 +48,6 @@ public class ChatListFragment extends Fragment {
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
-        ChatListAdapter adapter = new ChatListAdapter(context, groups);
-        rv.setAdapter(adapter);
-
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
@@ -60,6 +57,9 @@ public class ChatListFragment extends Fragment {
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
                     }
                 }
+
+                ChatListAdapter adapter = new ChatListAdapter(context, groups);
+                rv.setAdapter(adapter);
 //                adapter.setOnClick(position -> {
 //                    Log.e("x", String.valueOf(position));
 //                });
