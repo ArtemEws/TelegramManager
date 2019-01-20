@@ -1,11 +1,7 @@
 package org.telegram.telegrammanager.Models;
 
-import org.telegram.telegrammanager.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChatCard {
+
     public String name;
     public Integer subs;
     public Integer photoId;

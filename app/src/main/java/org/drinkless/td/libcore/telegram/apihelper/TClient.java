@@ -3,12 +3,14 @@ package org.drinkless.td.libcore.telegram.apihelper;
 import org.drinkless.td.libcore.telegram.Client;
 import org.drinkless.td.libcore.telegram.TdApi;
 
+import java.util.ArrayList;
+
 public class TClient {
 
 
 
     public AuthorizationManager authManager;
-    Handler frontHandler;
+    public Handler frontHandler;
     Client.ResultHandler apiHandler;
     // private User hostUser = null;
 
@@ -52,4 +54,23 @@ public class TClient {
         client.send(new TdApi.Close(), null);
     }
 
+    void getChat(long id, Handler fHandler) {
+        ChatGetter.getChat(this, id, fHandler);
+    }
+
+    public void getChats(Handler fHandler) {
+        ChatGetter.getChats(this, fHandler);
+    }
+
+    public void updateChat(Chat chat, Handler fHandler) {
+        getChat(chat.chat.id, fHandler);
+    }
+
+    public void getChatMessages(Chat chat, Handler fHandler) {
+        ChatGetter.getChatMessages(this, chat, fHandler);
+    }
+
+    public void sendMessage(Chat chat, String text, Handler fHandler) {
+        MessageSender.sendTextMessage(this, chat, text, fHandler);
+    }
 }
