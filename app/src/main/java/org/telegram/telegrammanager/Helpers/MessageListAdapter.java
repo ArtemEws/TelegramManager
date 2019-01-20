@@ -57,7 +57,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(MessageListAdapter.MessageCardViewHolder messageCardViewHolder, int i) {
         messageCardViewHolder.groupName.setText(messageList.get(i).author);
         messageCardViewHolder.groupSubScore.setText(messageList.get(i).message);
-//        messageCardViewHolder.groupImage.setImageResource(messageList.get(i).photoId);
     }
 
     @Override

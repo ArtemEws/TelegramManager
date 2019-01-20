@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.drinkless.td.libcore.telegram.TdApi;
+import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.R;
 
 public class ChatFragment extends Fragment {
 
     private static Context context;
+    public Chat chat;
     public ChatFragment(){
     }
 

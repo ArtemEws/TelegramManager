@@ -1,10 +1,10 @@
 package org.telegram.telegrammanager.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
+
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.Helpers.ChatListAdapter;
 import org.telegram.telegrammanager.MainActivity;
@@ -60,14 +60,23 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
-
+                ArrayList<Chat> myChannels = new ArrayList<>();
                 for(Chat chat : chats){
                     if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
+                        myChannels.add(chat);
                     }
                 }
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
+                adapter.setOnClick((i)->{
+                    Toast.makeText(context, myChannels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+                    ChatFragment cf = new ChatFragment();
+                    cf.chat = myChannels.get(i);
+                    FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
+                    fragmentManager.replace(R.id.frgmnt, cf);
+                    fragmentManager.commit();
+                });
                 rv.setAdapter(adapter);
                 done.set(true);
                 
