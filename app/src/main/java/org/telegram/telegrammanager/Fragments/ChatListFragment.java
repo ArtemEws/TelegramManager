@@ -3,8 +3,10 @@ package org.telegram.telegrammanager.Fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +17,10 @@ import org.telegram.telegrammanager.R;
 
 import java.util.ArrayList;
 
-import static org.drinkless.td.libcore.telegram.apihelper.Chat.SUPER_GROUP;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class ChatListFragment extends Fragment {
 
-    private RecyclerView rv;
-    private RecyclerView.Adapter RVAdapter;
-    private RecyclerView.LayoutManager llm;
     private Context context;
 
     public ChatListFragment(){
@@ -49,22 +47,32 @@ public class ChatListFragment extends Fragment {
         rv.setLayoutManager(llm);
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
+
+        ChatListAdapter adapter = new ChatListAdapter(context, groups);
+        rv.setAdapter(adapter);
+
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
 
                 for(Chat chat : chats){
-                    if(chat.getType() == SUPER_GROUP) {
+                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
                     }
                 }
+//                adapter.setOnClick(position -> {
+//                    Log.e("x", String.valueOf(position));
+//                });
             } else if (type == "ERROR") {
-
+                Log.e("Get Chat", type);
             }
         });
 
-        ChatListAdapter adapter = new ChatListAdapter(groups);
-        rv.setAdapter(adapter);
         return view;
         }
+
+    @UiThread
+    protected void dataSetChanged(ChatListAdapter adapter) {
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -2,18 +2,20 @@ package org.drinkless.td.libcore.telegram.apihelper;
 
 import org.drinkless.td.libcore.telegram.TdApi;
 
-public class Chat {
+public class Chat implements Comparable{
 
-    public static String BASIC_GROUP = "BasicGroup";
-    public static String PRIVATE = "Private";
-    public static String SECRET = "Secret";
-    public static String SUPER_GROUP = "SuperGroup";
-    public static String NON_SPECIFIED = "NonSpecified";
+    static String BASIC_GROUP = "BasicGroup";
+    static String PRIVATE = "Private";
+    static String SECRET = "Secret";
+    static String SUPER_GROUP = "SuperGroup";
+    static String NON_SPECIFIED = "NonSpecified";
 
     TdApi.Chat chat;
+    SuperGroup superGroup;
 
     Chat() {
         this.chat = null;
+        superGroup = null;
     }
 
     Chat(TdApi.Chat chat) {
@@ -57,5 +59,18 @@ public class Chat {
 
     public boolean hasPhoto() {
         return chat.photo != null;
+    }
+
+    public boolean isSuperGroupAdmin() {
+        return isSuperGroup() && superGroup.isCurrentUserAdmin();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Chat c = (Chat)o;
+        if (chat.order < c.chat.order) return -1;
+        if (chat.order > c.chat.order) return 1;
+
+        return 0;
     }
 }
