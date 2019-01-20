@@ -20,9 +20,6 @@ import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class ChatListFragment extends Fragment {
 
-    private RecyclerView rv;
-    private RecyclerView.Adapter RVAdapter;
-    private RecyclerView.LayoutManager llm;
     private Context context;
 
     public ChatListFragment(){
@@ -54,14 +51,13 @@ public class ChatListFragment extends Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
 
                 for(Chat chat : chats){
-                    if(chat.isSuperGroup() && chat.) {
+                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
 
                     }
                 }
                 ChatListAdapter adapter = new ChatListAdapter(groups);
                 rv.setAdapter(adapter);
-                invalidate();
             } else if (type == "ERROR") {
 
             }

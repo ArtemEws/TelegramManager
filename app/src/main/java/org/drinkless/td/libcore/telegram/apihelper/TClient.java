@@ -3,13 +3,13 @@ package org.drinkless.td.libcore.telegram.apihelper;
 import org.drinkless.td.libcore.telegram.Client;
 import org.drinkless.td.libcore.telegram.TdApi;
 
+import java.util.ArrayList;
+
 public class TClient {
 
 
 
     public AuthorizationManager authManager;
-    public ConnectionManager connectionManager;
-
     public Handler frontHandler;
     Client.ResultHandler apiHandler;
     // private User hostUser = null;
@@ -20,22 +20,22 @@ public class TClient {
     public static TClient create(Handler updatesHandler) {
 
         TClient cl = new TClient();
-        cl.connectionManager = new ConnectionManager(cl);
         cl.authManager = new AuthorizationManager(cl);
         cl.apiHandler = new DefaultUpdatesHandler(cl);
         cl.frontHandler = updatesHandler;
         cl.client = Client.create(cl.apiHandler, null, null);
 
-        String server = ProxyInfo.HttpProxy.server;
-        int port = ProxyInfo.HttpProxy.port;
-        String password = ProxyInfo.HttpProxy.password;
-        String login = ProxyInfo.HttpProxy.login;
-        cl.addProxy(server, port, login, password);
+        String server = "91.188.243.144";
+        int port = 9096;
+        String username = "rRkV7D";
+        String password = "JcaK38";
+
+        cl.addProxy(server, port, username, password);
         return cl;
     }
 
     public void addProxy(String server, int port, String login, String password) {
-        client.send(new TdApi.AddProxy(server, port, true, new TdApi.ProxyTypeHttp(login, password, true)), null);
+        client.send(new TdApi.AddProxy(server, port, true, new TdApi.ProxyTypeHttp(login, password, false)), null);
     }
 
     public void setUpdatesHandler(Handler newHandler) {
@@ -54,7 +54,7 @@ public class TClient {
         client.send(new TdApi.Close(), null);
     }
 
-    public void getChat(long id, Handler fHandler) {
+    void getChat(long id, Handler fHandler) {
         ChatGetter.getChat(this, id, fHandler);
     }
 
@@ -66,4 +66,11 @@ public class TClient {
         getChat(chat.chat.id, fHandler);
     }
 
+    public void getChatMessages(Chat chat, Handler fHandler) {
+        ChatGetter.getChatMessages(this, chat, fHandler);
+    }
+
+    public void sendMessage(Chat chat, String text, Handler fHandler) {
+        MessageSender.sendTextMessage(this, chat, text, fHandler);
+    }
 }
