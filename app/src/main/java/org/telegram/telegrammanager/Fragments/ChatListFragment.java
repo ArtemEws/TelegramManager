@@ -60,9 +60,7 @@ public class ChatListFragment extends Fragment {
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 rv.setAdapter(adapter);
-//                adapter.setOnClick(position -> {
-//                    Log.e("x", String.valueOf(position));
-//                });
+                
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }
