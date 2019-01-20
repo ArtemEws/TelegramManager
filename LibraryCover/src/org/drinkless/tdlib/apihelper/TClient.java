@@ -69,4 +69,8 @@ public class TClient {
     public void getChatMessages(Chat chat, Handler fHandler) {
         ChatGetter.getChatMessages(this, chat, fHandler);
     }
+
+    public void sendMessage(Chat chat, String text, Handler fHandler) {
+        MessageSender.sendTextMessage(this, chat, text, fHandler);
+    }
 }
