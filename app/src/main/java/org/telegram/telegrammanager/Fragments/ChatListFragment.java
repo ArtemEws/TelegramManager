@@ -21,6 +21,7 @@ import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
@@ -54,20 +55,8 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
-//        TextView headerText = FragmentActivity..findViewById(R.id.header_text);
-//        headerText.setText(R.string.app_name);
+        AtomicBoolean done = new AtomicBoolean(false);
 
-//        final FragmentManager fragmentManager = getFragmentManager();
-
-//        Button helperButton = view.findViewById(R.id.helper_button);
-
-//        helperButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
-//                        new ChatListFragment(),
-//                        ChatListFragment.TAG).commit();            }
-//        });
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
@@ -80,11 +69,14 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 rv.setAdapter(adapter);
+                done.set(true);
                 
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }
         });
+
+        while (!done.get()) {}
 
         return view;
         }
