@@ -41,9 +41,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         checkForPermissions();
-        mainFragTrans = getFragmentManager().beginTransaction();
+
 
         tClient.setUpdatesHandler(new LoginHandler());
+
+
     }
 
 //    public class ConnectionHandler implements Handler{
@@ -93,7 +95,7 @@ public class MainActivity extends Activity {
                     Log.i(AUTH_EXEP_TAG, "Auth completed");
 
                     tClient.setUpdatesHandler(new MultiHandler());
-
+                    mainFragTrans = getFragmentManager().beginTransaction();
                     mainFragTrans.replace(R.id.frgmnt, chatList);
                     mainFragTrans.commit();
 

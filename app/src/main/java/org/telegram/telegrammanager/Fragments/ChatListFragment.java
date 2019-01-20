@@ -54,17 +54,19 @@ public class ChatListFragment extends Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
 
                 for(Chat chat : chats){
-                    if(chat.getType() == SUPER_GROUP) {
+                    if(chat.isSuperGroup() && chat.) {
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
+
                     }
                 }
+                ChatListAdapter adapter = new ChatListAdapter(groups);
+                rv.setAdapter(adapter);
+                invalidate();
             } else if (type == "ERROR") {
 
             }
         });
 
-        ChatListAdapter adapter = new ChatListAdapter(groups);
-        rv.setAdapter(adapter);
         return view;
         }
 }
