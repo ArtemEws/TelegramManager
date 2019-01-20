@@ -14,7 +14,7 @@ import org.telegram.telegrammanager.R;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder>{
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatCardViewHolder>{
 
     public static class ChatCardViewHolder extends RecyclerView.ViewHolder {
         public CardView cv;
@@ -34,7 +34,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ChatCardViewHolder
 
     public List<ChatCard> groupList;
 
-    public RVAdapter(List<ChatCard> groupList){
+    public ChatListAdapter(List<ChatCard> groupList){
         this.groupList = groupList;
     }
 

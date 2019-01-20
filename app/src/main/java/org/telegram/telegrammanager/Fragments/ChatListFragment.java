@@ -8,14 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
-import org.telegram.telegrammanager.Helpers.RVAdapter;
+import org.telegram.telegrammanager.Helpers.ChatListAdapter;
 import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.drinkless.td.libcore.telegram.apihelper.Chat.SUPER_GROUP;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
@@ -65,7 +63,7 @@ public class ChatListFragment extends Fragment {
             }
         });
 
-        RVAdapter adapter = new RVAdapter(groups);
+        ChatListAdapter adapter = new ChatListAdapter(groups);
         rv.setAdapter(adapter);
         return view;
         }

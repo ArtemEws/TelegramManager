@@ -1,10 +1,7 @@
 package org.telegram.telegrammanager.Models;
 
-import org.drinkless.td.libcore.telegram.TdApi;
-
 public class ChatCard {
 
-    public TdApi.Chat chat;
     public String name;
     public Integer subs;
     public Integer photoId;
