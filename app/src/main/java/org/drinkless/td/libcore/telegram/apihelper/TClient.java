@@ -26,16 +26,16 @@ public class TClient {
         cl.frontHandler = updatesHandler;
         cl.client = Client.create(cl.apiHandler, null, null);
 
-        String server = ProxyInfo.server;
-        int port = ProxyInfo.port;
-        String secret = ProxyInfo.secret;
-
-        cl.addProxy(server, port, secret);
+        String server = ProxyInfo.HttpProxy.server;
+        int port = ProxyInfo.HttpProxy.port;
+        String password = ProxyInfo.HttpProxy.password;
+        String login = ProxyInfo.HttpProxy.login;
+        cl.addProxy(server, port, login, password);
         return cl;
     }
 
-    public void addProxy(String server, int port, String secret) {
-        client.send(new TdApi.AddProxy(server, port, true, new TdApi.ProxyTypeMtproto(secret)), null);
+    public void addProxy(String server, int port, String login, String password) {
+        client.send(new TdApi.AddProxy(server, port, true, new TdApi.ProxyTypeHttp(login, password, true)), null);
     }
 
     public void setUpdatesHandler(Handler newHandler) {

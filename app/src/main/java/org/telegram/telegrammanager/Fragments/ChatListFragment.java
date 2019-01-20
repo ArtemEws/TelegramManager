@@ -9,12 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.Helpers.RVAdapter;
 import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.drinkless.td.libcore.telegram.apihelper.Chat.SUPER_GROUP;
+import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class ChatListFragment extends Fragment {
 
@@ -46,10 +50,20 @@ public class ChatListFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(context);
         rv.setLayoutManager(llm);
 
-        List groups = new ArrayList<ChatCard>();
-        groups.add(new ChatCard("ArtemLebedev", 24856823, R.drawable.logo));
-        groups.add(new ChatCard("Mr.Freeman", 27434324, R.drawable.logo));
-        groups.add(new ChatCard("[netstalkers]", 28424524, R.drawable.logo));
+        ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
+        tClient.getChats((type, obj) -> {
+            if (type == "chats") {
+                ArrayList<Chat> chats = (ArrayList<Chat>)obj;
+
+                for(Chat chat : chats){
+                    if(chat.getType() == SUPER_GROUP) {
+                        groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
+                    }
+                }
+            } else if (type == "ERROR") {
+
+            }
+        });
 
         RVAdapter adapter = new RVAdapter(groups);
         rv.setAdapter(adapter);

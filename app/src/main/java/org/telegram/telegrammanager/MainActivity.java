@@ -1,10 +1,14 @@
 package org.telegram.telegrammanager;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
 import org.drinkless.td.libcore.telegram.apihelper.*;
@@ -17,8 +21,10 @@ import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class MainActivity extends Activity {
 
-    private static String AUTH_EXEP_TAG = "Authorisation";
-    private static String CONNECTION_EXEP_TAG = "Connection";
+    private static final String AUTH_EXEP_TAG = "Authorisation";
+    private static final String CONNECTION_EXEP_TAG = "Connection";
+    private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 0;
+    private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
 
     FragmentTransaction mainFragTrans;
 
@@ -34,9 +40,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkForPermissions();
         mainFragTrans = getFragmentManager().beginTransaction();
-        mainFragTrans.replace(R.id.frgmnt, chatList);
-        mainFragTrans.commit();
 
         tClient.setUpdatesHandler(new LoginHandler());
     }
@@ -89,53 +94,8 @@ public class MainActivity extends Activity {
 
                     tClient.setUpdatesHandler(new MultiHandler());
 
-                    ArrayList<Chat> chats;
-
-                    tClient.getChats(new Handler() {
-                        @Override
-                        public void handle(String type, Object obj) {
-                            if (type == "chats") {
-                                System.out.println("Каналы:");
-                                ArrayList<Chat> chats = (ArrayList<Chat>)obj;
-
-                                for (int i = 0; i < chats.size(); i++) {
-                                    Integer j = i;
-                                    Chat chat = chats.get(i);
-
-                                    TCondition cond = (ctype, cobj)->ctype == "file" && ((FileManager.File)cobj).getId() == chat.getPhotoFile().getId();
-                                    Handler handler = (htype, hobj)->{
-                                        FileManager.File file = (FileManager.File)hobj;
-                                        tClient.updateChat(chat, new Handler() {
-                                            @Override
-                                            public void handle(String type, Object obj) {
-                                                chats.set(j, (Chat)obj);
-                                                Chat chat = chats.get(j);
-                                                System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
-                                            }
-                                        });
-                                    };
-
-                                    if (chat.isChannel()) {
-
-                                        ((MultiHandler)tClient.frontHandler).addHandler(
-                                                cond, handler
-                                        );
-
-                                        if (!chat.hasPhoto()) {
-                                            System.out.println(chat.getTitle() + " " + chat.getType());
-                                        } else if (chat.getPhotoFile().getLocalPath() == null || chat.getPhotoFile().getLocalPath().length() == 0)
-                                            new FileManager(tClient).downloadFile(chat.getPhotoFile());
-                                        else {
-                                            System.out.println(chat.getTitle() + " " + chat.getType() + chat.getPhotoFile().getLocalPath());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
                     mainFragTrans.replace(R.id.frgmnt, chatList);
-
+                    mainFragTrans.commit();
 
                 } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
                     Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
@@ -148,6 +108,35 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void checkForPermissions(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    && ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSIONS_READ_EXTERNAL_STORAGE);
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();

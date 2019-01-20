@@ -4,11 +4,11 @@ import org.drinkless.td.libcore.telegram.TdApi;
 
 public class Chat {
 
-    static String BASIC_GROUP = "BasicGroup";
-    static String PRIVATE = "Private";
-    static String SECRET = "Secret";
-    static String SUPER_GROUP = "SuperGroup";
-    static String NON_SPECIFIED = "NonSpecified";
+    public static String BASIC_GROUP = "BasicGroup";
+    public static String PRIVATE = "Private";
+    public static String SECRET = "Secret";
+    public static String SUPER_GROUP = "SuperGroup";
+    public static String NON_SPECIFIED = "NonSpecified";
 
     TdApi.Chat chat;
 
