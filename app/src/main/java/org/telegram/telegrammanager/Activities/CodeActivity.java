@@ -1,20 +1,18 @@
 package org.telegram.telegrammanager.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import org.drinkless.td.libcore.telegram.apihelper.AuthorizationManager;
 import org.telegram.telegrammanager.MainActivity;
 import org.telegram.telegrammanager.R;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
-public class CodeActivity extends AppCompatActivity {
+public class CodeActivity extends Activity {
 
     static{
         System.loadLibrary("tdjni");
@@ -47,7 +45,7 @@ public class CodeActivity extends AppCompatActivity {
                 int state = (int) obj;
 
                 if (state == AuthorizationManager.READY) {
-                    Intent intent = new Intent(CodeActivity.this, ChatListActivity.class);
+                    Intent intent = new Intent(CodeActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else if (type == "ERROR") {
                     System.out.println("Error occured");
