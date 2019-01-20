@@ -15,7 +15,6 @@ import org.telegram.telegrammanager.R;
 
 import java.util.ArrayList;
 
-import static org.drinkless.td.libcore.telegram.apihelper.Chat.SUPER_GROUP;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class ChatListFragment extends Fragment {
