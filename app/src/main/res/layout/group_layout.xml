@@ -20,22 +20,22 @@
 
             <ImageView
                     android:layout_width="369dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="6dp"
                     card_view:srcCompat="@drawable/chat_line_separtor"
                     android:id="@+id/chat_line_separator"
                     android:layout_weight="1"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toBottomOf="@id/group_image"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginLeft="7dp"
             />
             <ImageView
                     android:id="@+id/group_image"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:maxHeight="75dp"
-                    android:maxWidth="75dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:maxHeight="65dp"
+                    android:maxWidth="65dp"
                     android:layout_marginLeft="7dp"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
@@ -48,12 +48,12 @@
                     android:text="Рикардо Milos"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_width="match_parent"
                     android:layout_height="27dp"
                     card_view:layout_constraintStart_toEndOf="@+id/group_image"
-                    android:layout_marginStart="90dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="85dp"
+                    android:layout_marginTop="6dp"
                     card_view:layout_constraintTop_toTopOf="@+id/group_image"/>
 
             <TextView
@@ -61,12 +61,12 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Потанцуем?"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:layout_width="match_parent"
                     android:layout_height="27dp"
                     card_view:layout_constraintStart_toStartOf="@id/group_name"
-                    android:layout_marginStart="90dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="85dp"
+                    android:layout_marginTop="2dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/group_name"/>
 
         </android.support.constraint.ConstraintLayout>
