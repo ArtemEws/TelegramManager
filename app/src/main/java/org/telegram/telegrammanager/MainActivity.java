@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
 import org.drinkless.td.libcore.telegram.apihelper.*;
+import org.telegram.telegrammanager.Activities.FragmentActivity;
 import org.telegram.telegrammanager.Activities.GreetingActivity;
 import org.telegram.telegrammanager.Fragments.ChatListFragment;
 
@@ -95,9 +96,8 @@ public class MainActivity extends Activity {
                     Log.i(AUTH_EXEP_TAG, "Auth completed");
 
                     tClient.setUpdatesHandler(new MultiHandler());
-                    mainFragTrans = getFragmentManager().beginTransaction();
-                    mainFragTrans.replace(R.id.frgmnt, chatList);
-                    mainFragTrans.commit();
+                    Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+                    startActivity(intent);
 
                 } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
                     Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
