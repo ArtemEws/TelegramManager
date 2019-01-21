@@ -13,8 +13,4 @@ public class Message {
     public MessageContent getMessageContent() {
         return new MessageContent(message.content);
     }
-
-    public User getUserFrom() {
-        return userFrom;
-    }
 }

@@ -76,22 +76,23 @@ class TestApp {
                             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                             ArrayList<Chat> chats = (ArrayList<Chat>)iobj;
-//                            client.getChatMessages(chats.get(0), (ctype, cobj) -> {
-//                                if (ctype == "chatMessages") {
-//                                    ArrayList<Message> messages = (ArrayList<Message>)cobj;
-//                                    for (Message message : messages) {
-//                                        if (message.getMessageContent().isText())
-//                                            System.out.println(message.getUserFrom().getShortName() + " " + message.getMessageContent().getText());
-//                                    }
-//                                }
-//                            });
-                            while (true) {
-                                int num = Integer.parseInt(prompt("CHAT NUMBER"));
-                                String text = prompt("Write message to " + chats.get(num).getTitle());
-                                if (!text.equals("-")) {
-                                    client.sendMessage(chats.get(num), text, (a, b)->{});
+                            client.getChatMessages(chats.get(3), (ctype, cobj) -> {
+                                if (ctype == "chatMessages") {
+                                    ArrayList<Message> messages = (ArrayList<Message>)cobj;
+                                    for (Message message : messages) {
+                                        if (message.getMessageContent().isText()) {
+                                            System.out.println(message.getMessageContent().getText());
+                                        }
+                                    }
                                 }
-                            }
+                            });
+//                            while (true) {
+//                                int num = Integer.parseInt(prompt("CHAT NUMBER"));
+//                                String text = prompt("Write message to " + chats.get(num).getTitle());
+//                                if (!text.equals("-")) {
+//                                    client.sendMessage(chats.get(num), text, (a, b)->{});
+//                                }
+//                            }
                         }
                     };
 
