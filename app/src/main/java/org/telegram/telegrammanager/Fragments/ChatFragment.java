@@ -62,7 +62,7 @@ public class ChatFragment extends Fragment {
 
             for(Message message : messages){
                 if(message.getMessageContent().isText()){
-                    messageCards.add(new MessageCard(message.getUserFrom().getShortName(), message.getMessageContent().getText()));
+                    messageCards.add(new MessageCard(chat.getTitle(), message.getMessageContent().getText()));
                 }
             }
             MessageListAdapter adapter = new MessageListAdapter(messageCards);
