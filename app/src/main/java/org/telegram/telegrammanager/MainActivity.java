@@ -43,6 +43,9 @@ public class MainActivity extends Activity {
 
         checkForPermissions();
 
+        Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+        startActivity(intent);
+
         tClient.setUpdatesHandler(new LoginHandler());
     }
 
@@ -117,4 +120,8 @@ public class MainActivity extends Activity {
         super.onStop();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

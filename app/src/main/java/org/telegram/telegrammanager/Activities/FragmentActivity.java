@@ -37,26 +37,25 @@ public class FragmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
-                        new NewPostFragment(),
-                        ChatListFragment.TAG).commit();
+                        new NewPostFragment()).commit();
 
-                fab.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        Chat chat;
-                        EditText messageField = findViewById(R.id.message_text);
-                        sendTextMessage(tClient, chat, messageField.getText(), new Handler() {
-                            @Override
-                            public void handle(String type, Object obj) {
-                                if(type == "messageSent"){
-                                    fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
-                                            new ChatListFragment(),
-                                            ChatListFragment.TAG).commit();
-                                }
-                            }
-                        });
-                    }
-                });
+//                fab.setOnClickListener(new View.OnClickListener(){
+//                    @Override
+//                    public void onClick(View view) {
+//                        Chat chat;
+//                        EditText messageField = findViewById(R.id.message_text);
+//                        sendTextMessage(tClient, chat, messageField.getText(), new Handler() {
+//                            @Override
+//                            public void handle(String type, Object obj) {
+//                                if(type == "messageSent"){
+//                                    fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
+//                                            new ChatListFragment(),
+//                                            ChatListFragment.TAG).commit();
+//                                }
+//                            }
+//                        });
+//                    }
+//                });
             }
         });
 
@@ -71,5 +70,6 @@ public class FragmentActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        
     }
 }
