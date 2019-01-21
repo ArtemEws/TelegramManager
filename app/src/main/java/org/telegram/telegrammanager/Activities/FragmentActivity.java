@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.FloatingActionButton;
 
+import org.telegram.telegrammanager.Fragments.ChatListFragment;
 import org.telegram.telegrammanager.R;
 
 public class FragmentActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class FragmentActivity extends AppCompatActivity {
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState == null) {
-         //   fragmentManager.beginTransaction().replace(R.id.fragment, new SimpleFragment(), SimpleFragment.TAG).commit();
+            fragmentManager.beginTransaction().replace(R.id.main_fragment_container, new ChatListFragment(), ChatListFragment.TAG).commit();
         }
     }
 

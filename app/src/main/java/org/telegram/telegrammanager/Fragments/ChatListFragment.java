@@ -19,9 +19,10 @@ import java.util.ArrayList;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
-public class ChatListFragment extends Fragment {
+public class ChatListFragment extends android.support.v4.app.Fragment {
 
     private Context context;
+    public static String TAG = ChatListFragment.class.getSimpleName();
 
     public ChatListFragment(){
     }
