@@ -9,23 +9,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import org.drinkless.td.libcore.telegram.apihelper.*;
 import org.telegram.telegrammanager.Activities.GreetingActivity;
+import org.telegram.telegrammanager.Fragments.ChatFragment;
 import org.telegram.telegrammanager.Fragments.ChatListFragment;
 
 import java.util.ArrayList;
 
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String AUTH_EXEP_TAG = "Authorisation";
     private static final String CONNECTION_EXEP_TAG = "Connection";
     private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE = 0;
     private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
 
+    public static ArrayList<Chat> channels;
     FragmentTransaction mainFragTrans;
 
     @NonNull
@@ -41,7 +44,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         checkForPermissions();
-
 
         tClient.setUpdatesHandler(new LoginHandler());
 
@@ -139,6 +141,7 @@ public class MainActivity extends Activity {
             }
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();

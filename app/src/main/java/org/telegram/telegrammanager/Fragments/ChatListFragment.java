@@ -1,9 +1,10 @@
 package org.telegram.telegrammanager.Fragments;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.UiThread;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +25,11 @@ public class ChatListFragment extends Fragment {
 
     private Context context;
     private Integer counter;
+    private android.support.v4.app.FragmentTransaction mainFragTrans;
+
+    @NonNull
+    ChatFragment chatFrag = new ChatFragment();
+
     public ChatListFragment(){
     }
 
@@ -58,14 +64,22 @@ public class ChatListFragment extends Fragment {
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
-
+                ArrayList<Chat> channels = (ArrayList<Chat>)obj;
                 for(Chat chat : chats){
                     if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
                         counter++;
                         groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
                         adapter.notifyItemInserted(counter);
+                        channels.add(chat);
                     }
                 }
+                adapter.setOnClick((i)->{
+                    Toast.makeText(context, "Oke", Toast.LENGTH_SHORT).show();
+                    chatFrag.chat = channels;
+                    mainFragTrans = getFragmentManager().beginTransaction();
+                    mainFragTrans.replace(R.id.frgmnt, chatFrag);
+                    mainFragTrans.commit();
+                });
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }

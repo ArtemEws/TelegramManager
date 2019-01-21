@@ -1,17 +1,22 @@
 package org.telegram.telegrammanager.Fragments;
 
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.R;
+
+import java.util.ArrayList;
 
 public class ChatFragment extends Fragment {
 
     private static Context context;
+    public Integer id;
+    public ArrayList<Chat> chat;
     public ChatFragment(){
     }
 
@@ -27,7 +32,6 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.chat_fragment,
                 container, false);
 
-        context = view.getContext();
         return view;
     }
 }
