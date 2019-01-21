@@ -4,14 +4,19 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.Helpers.ChatListAdapter;
+import org.telegram.telegrammanager.MainActivity;
 import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
 
@@ -49,6 +54,20 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
+//        TextView headerText = FragmentActivity..findViewById(R.id.header_text);
+//        headerText.setText(R.string.app_name);
+
+//        final FragmentManager fragmentManager = getFragmentManager();
+
+//        Button helperButton = view.findViewById(R.id.helper_button);
+
+//        helperButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
+//                        new ChatListFragment(),
+//                        ChatListFragment.TAG).commit();            }
+//        });
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;

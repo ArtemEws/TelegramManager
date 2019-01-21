@@ -12,6 +12,7 @@ import android.view.View;
 import android.support.design.widget.FloatingActionButton;
 
 import org.telegram.telegrammanager.Fragments.ChatListFragment;
+import org.telegram.telegrammanager.Fragments.NewPostFragment;
 import org.telegram.telegrammanager.R;
 
 public class FragmentActivity extends AppCompatActivity {
@@ -23,21 +24,27 @@ public class FragmentActivity extends AppCompatActivity {
         Toolbar mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mainToolbar);
         ActionBar bar = getSupportActionBar();
-
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
+                        new NewPostFragment(),
+                        ChatListFragment.TAG).commit();
             }
         });
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-
         if (savedInstanceState == null) {
-            fragmentManager.beginTransaction().replace(R.id.main_fragment_container, new ChatListFragment(), ChatListFragment.TAG).commit();
+            fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
+                                                        new ChatListFragment(),
+                                                        ChatListFragment.TAG).commit();
         }
     }
 
+//    TODO
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

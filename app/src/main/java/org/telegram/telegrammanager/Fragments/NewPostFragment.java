@@ -1,34 +1,23 @@
 package org.telegram.telegrammanager.Fragments;
 
-
-import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import org.telegram.telegrammanager.R;
 
-public class ChatFragment extends Fragment {
+public class NewPostFragment extends Fragment {
 
-    private static Context context;
-    public ChatFragment(){
-    }
-
-    public static ChatFragment newInstance() {
-        return new ChatFragment();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState){
 
-        View view = inflater.inflate(R.layout.chat_fragment,
+        View view = inflater.inflate(R.layout.fragment_new_post,
                 container, false);
 
-        context = view.getContext();
         return view;
     }
+
 
 }
