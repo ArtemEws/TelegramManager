@@ -1,23 +1,16 @@
 package org.telegram.telegrammanager.Fragments;
 
-
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.Toast;
-import org.drinkless.td.libcore.telegram.TdApi;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.drinkless.td.libcore.telegram.apihelper.Message;
-import org.telegram.telegrammanager.Helpers.ChatListAdapter;
 import org.telegram.telegrammanager.Helpers.MessageListAdapter;
-import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.Models.MessageCard;
 import org.telegram.telegrammanager.R;
 

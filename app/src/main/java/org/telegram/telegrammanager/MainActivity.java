@@ -43,11 +43,7 @@ public class MainActivity extends Activity {
 
         checkForPermissions();
 
-
-
         tClient.setUpdatesHandler(new LoginHandler());
-
-
     }
 
     public class LoginHandler implements Handler {

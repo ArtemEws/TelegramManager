@@ -11,7 +11,11 @@
     <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
                                                  android:layout_height="match_parent">
         <EditText
-                android:id="@+id/edit_text"
+                android:id="@+id/group_list"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        <EditText
+                android:id="@+id/message_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
@@ -19,7 +23,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@null">
+                android:background="@null"
+                android:singleLine="true" android:selectAllOnFocus="true" android:cursorVisible="true"
+                android:gravity="top" android:padding="10dp">
         </EditText>
         <LinearLayout
                 android:layout_width="match_parent"
