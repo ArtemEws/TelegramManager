@@ -59,10 +59,10 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
                 for(Chat chat : chats){
-//                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
-                        groups.add(new ChatCard(chat.getTitle(), 228, R.drawable.logo));
+                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
+                        groups.add(new ChatCard(chat, chat.getTitle(), 228, R.drawable.logo));
                         myChannels.add(chat);
-//                    }
+                    }
                 }
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
@@ -85,5 +85,11 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
         while (!done.get()) {}
 
         return view;
+        }
+
+        @Override
+        public void onResume(){
+            super.onResume();
+
         }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Telegram Manager</string>
+    <string name="receiver">Выберите получателя</string>
 </resources>
