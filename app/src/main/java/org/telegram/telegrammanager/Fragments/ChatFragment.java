@@ -45,6 +45,8 @@ public class ChatFragment extends Fragment {
         rv.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
+
+        llm.setReverseLayout(true);
         rv.setLayoutManager(llm);
 
         ArrayList<MessageCard> messageCards = new ArrayList<MessageCard>();
