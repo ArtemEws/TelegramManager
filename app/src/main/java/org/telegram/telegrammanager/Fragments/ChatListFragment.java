@@ -1,11 +1,11 @@
 package org.telegram.telegrammanager.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -74,7 +74,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                     ChatFragment cf = new ChatFragment();
                     cf.chat = myChannels.get(i);
                     FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
-                    fragmentManager.replace(R.id.main_fragment_container, cf);
+                    fragmentManager.replace(R.id.frgmnt, cf);
                     fragmentManager.commit();
                 });
                 rv.setAdapter(adapter);
