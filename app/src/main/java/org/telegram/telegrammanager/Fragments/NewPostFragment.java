@@ -1,6 +1,7 @@
 package org.telegram.telegrammanager.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -17,9 +18,8 @@ public class NewPostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_post,
                 container, false);
 
-//        fab.hide();
-
-//        view.findViewById(R.id.fab).hide();
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        fab.hide();
         return view;
     }
 
