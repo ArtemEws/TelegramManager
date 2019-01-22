@@ -103,12 +103,14 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                     for(Chat chat : receivers){
                         sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
                             if(type == "messageSent"){
-                                Toast.makeText(getActivity(), "Message sent successful!",
-                                        Toast.LENGTH_LONG).show();
                             }
                         });
                     }
                 }
+
+                Toast.makeText(getActivity(), "Сообщени отправлены",
+                        Toast.LENGTH_LONG).show();
+
                 ChatListFragment clf = new ChatListFragment();
                 FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
                 fragmentManager.replace(R.id.main_fragment_container, clf);
