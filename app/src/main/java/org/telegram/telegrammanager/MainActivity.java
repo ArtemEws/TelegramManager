@@ -43,45 +43,12 @@ public class MainActivity extends Activity {
 
         checkForPermissions();
 
-
         tClient.setUpdatesHandler(new LoginHandler());
-
-
+        if (savedInstanceState == null) {
+            Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+            startActivity(intent);
+        }
     }
-
-//    public class ConnectionHandler implements Handler{
-//
-//        @Override
-//        public void handle(String type, Object obj){
-//
-//            if (type == "connectionState") {
-//                int state = (int) obj;
-//                TextView text = findViewById(R.id.text);
-//                switch (state){
-//                    case ConnectionManager.READY:
-//                        Log.i(CONNECTION_EXEP_TAG, "Connection completed successful");
-//                        tClient.setUpdatesHandler(new LoginHandler());
-//                        break;
-//                    case ConnectionManager.CONNECTED_TO_PROXY:
-//                        text.setText("connected to proxy");
-//                        break;
-//                    case ConnectionManager.WAITING_FOR_CONNECTION:
-//                        text.setText("waiting for connection");
-//                        break;
-//                    case ConnectionManager.CONNECTING:
-//                        text.setText("connecting...");
-//                        break;
-//                    case ConnectionManager.UPDATING:
-//                        text.setText("updating...");
-//                        break;
-//                }
-//
-//            } else if (type == "ERROR") {
-//                TextView text = findViewById(R.id.text);
-//                text.setText("error");
-//            }
-//        }
-//    }
 
     public class LoginHandler implements Handler {
 
@@ -154,4 +121,8 @@ public class MainActivity extends Activity {
         super.onStop();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

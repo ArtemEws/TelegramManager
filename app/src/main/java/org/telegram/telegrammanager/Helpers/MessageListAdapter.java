@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import org.drinkless.td.libcore.telegram.TdApi;
 import org.telegram.telegrammanager.Models.MessageCard;
 import org.telegram.telegrammanager.R;
 
@@ -19,17 +20,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public static class MessageCardViewHolder extends RecyclerView.ViewHolder {
 
         public CardView cv;
-        public TextView groupName;
-        public TextView groupSubScore;
-        public ImageView groupImage;
-
+        public TextView authorName;
+        public TextView messageContent;
         MessageCardViewHolder(View itemView) {
             super(itemView);
 
             cv = itemView.findViewById(R.id.message_card);
-            groupName = itemView.findViewById(R.id.group_name);
-            groupSubScore = itemView.findViewById(R.id.group_subs_score);
-            groupImage = itemView.findViewById(R.id.group_image);
+            authorName = itemView.findViewById(R.id.author_name);
+            messageContent = itemView.findViewById(R.id.message_content);
         }
     }
 
@@ -48,16 +46,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public MessageListAdapter.MessageCardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.group_layout, viewGroup, false);
+        View v = inflater.inflate(R.layout.message_layout, viewGroup, false);
         MessageListAdapter.MessageCardViewHolder messageCardVh = new MessageListAdapter.MessageCardViewHolder(v);
         return messageCardVh;
     }
 
     @Override
     public void onBindViewHolder(MessageListAdapter.MessageCardViewHolder messageCardViewHolder, int i) {
-        messageCardViewHolder.groupName.setText(messageList.get(i).author);
-        messageCardViewHolder.groupSubScore.setText(messageList.get(i).message);
-//        messageCardViewHolder.groupImage.setImageResource(messageList.get(i).photoId);
+        messageCardViewHolder.authorName.setText(messageList.get(i).author);
+        messageCardViewHolder.messageContent.setText(messageList.get(i).message);
     }
 
     @Override

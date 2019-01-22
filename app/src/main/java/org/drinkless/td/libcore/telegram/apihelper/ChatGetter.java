@@ -5,6 +5,8 @@ import org.drinkless.td.libcore.telegram.TdApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ChatGetter {
 
@@ -106,26 +108,47 @@ public class ChatGetter {
     }
 
     static void getChatMessages(TClient t, Chat chat, Handler fHandler) {
-        t.client.send(new TdApi.SearchChatMessages(chat.chat.id, "", 0, 0L, 0, 100, null), object -> {
+        new Thread(()->{
+
+            ArrayList<Message> messages = new ArrayList<>();
+            AtomicLong lastMesId = new AtomicLong(0);
+            while (messages.size() < 100 && lastMesId.get() != -1) {
+                AtomicBoolean done = new AtomicBoolean(false);
+                getSomeMessages(t, chat, lastMesId.get(), (type, obj) -> {
+                    System.out.println(lastMesId.get());
+                    ArrayList<Message> x = (ArrayList<Message>) obj;
+                    if (x.size() == 0) {
+                        lastMesId.set(-1);
+                    } else {
+                        lastMesId.set(x.get(x.size() - 1).message.id);
+                    }
+
+                    for (Message mes : x) messages.add(mes);
+
+                    done.set(true);
+                });
+
+                while (!done.get()) {
+                }
+            }
+            fHandler.handle("chatMessages", messages);
+
+        }).start();
+    }
+
+    static void getSomeMessages(TClient t, Chat chat, long mid, Handler fHandler) {
+        t.client.send(new TdApi.GetChatHistory(chat.chat.id, mid, 0, 100, false), object -> {
             if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR) {
                 TdApi.Messages messages = (TdApi.Messages)object;
                 ArrayList<Message> ret = new ArrayList<>();
-                for (TdApi.Message mes : messages.messages) {
-                    UserGetter.getUserbyId(t, mes.senderUserId, (type, obj) -> {
-                        if (type == "user") {
-                            Message message = new Message(mes);
-                            message.userFrom = (User)obj;
-                            synchronized (ret) {
-                                ret.add(message);
-                            }
-                            if (ret.size() == messages.messages.length)
-                                fHandler.handle("chatMessages", ret);
-                        } else if (type == "ERROR") {
-                            System.out.println("Error occured");
-                        }
-                    });
+                if (messages.messages.length == 0) {
+                    fHandler.handle("chatMessages", ret);
+                } else {
+                    for (TdApi.Message mes : messages.messages) {
+                        ret.add(new Message(mes));
+                    }
+                    fHandler.handle("chatMessages", ret);
                 }
-                fHandler.handle("chatMessages", ret);
             } else {
                 fHandler.handle("ERROR", null);
             }

@@ -3,7 +3,6 @@ package org.telegram.telegrammanager.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
+import org.drinkless.td.libcore.telegram.apihelper.Handler;
 import org.telegram.telegrammanager.Helpers.ChatListAdapter;
 import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
@@ -21,18 +21,20 @@ import org.telegram.telegrammanager.R;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.drinkless.td.libcore.telegram.apihelper.MessageSender.sendTextMessage;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
-public class ChatListFragment extends android.support.v4.app.Fragment {
+public class ReceiversListFragment extends android.support.v4.app.Fragment {
 
     private Context context;
-    public static String TAG = ChatListFragment.class.getSimpleName();
+    public static String TAG = ReceiversListFragment.class.getSimpleName();
+    public static String message;
 
-    public ChatListFragment(){
+    public ReceiversListFragment(){
     }
 
-    public static ChatListFragment newInstance() {
-        return new ChatListFragment();
+    public static ReceiversListFragment newInstance() {
+        return new ReceiversListFragment();
     }
 
     @Override
@@ -40,12 +42,12 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.chat_list_fragment,
+        View view = inflater.inflate(R.layout.receivers_fragment,
                 container, false);
 
         context = view.getContext();
 
-        RecyclerView rv = view.findViewById(R.id.chats_rv);
+        RecyclerView rv = view.findViewById(R.id.receivers_rv);
         rv.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -53,8 +55,12 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
+        FloatingActionButton sendFab = view.findViewById(R.id.send_fab);
+
         AtomicBoolean done = new AtomicBoolean(false);
 
+
+        ArrayList<Chat> receivers = new ArrayList<>();
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
@@ -68,12 +74,16 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 adapter.setOnClick((i)->{
-                    Toast.makeText(context, myChannels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
-                    ChatFragment cf = new ChatFragment();
-                    cf.chat = myChannels.get(i);
-                    FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
-                    fragmentManager.replace(R.id.main_fragment_container, cf);
-                    fragmentManager.commit();
+                    ChatCard chat = groups.get(i);
+
+                    if(!receivers.contains(chat.chat)){
+                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.subs, R.mipmap.checked));
+                        receivers.add(chat.chat);
+                    } else {
+                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.subs, R.drawable.logo));
+                        receivers.remove(chat.chat);
+                    }
+                    adapter.notifyItemChanged(i);
                 });
                 rv.setAdapter(adapter);
                 done.set(true);
@@ -83,15 +93,28 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        sendFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(receivers != null){
+                    for(Chat chat : receivers){
+                        sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
+                            if(type == "messageSent"){
+                                Toast.makeText(getActivity(), "Message sent successful!",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+                ChatListFragment clf = new ChatListFragment();
+                FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
+                fragmentManager.replace(R.id.main_fragment_container, clf);
+                fragmentManager.commit();
+            }
+        });
+
         while (!done.get()) {}
 
         return view;
-        }
-
-        @Override
-        public void onResume(){
-            super.onResume();
-            FloatingActionButton fab = getActivity().findViewById(R.id.fab);
-            fab.show();
         }
 }
