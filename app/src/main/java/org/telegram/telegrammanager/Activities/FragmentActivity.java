@@ -38,8 +38,6 @@ public class FragmentActivity extends AppCompatActivity {
 //    TODO
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
