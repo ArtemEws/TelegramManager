@@ -60,13 +60,11 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
                 for(Chat chat : chats){
-                    Log.e("x", chat.getTitle());
                     if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
                         groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
                     else
                         groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
 
-                    Log.e("x", chat.getTitle());
                     myChannels.add(chat);
                 }
 

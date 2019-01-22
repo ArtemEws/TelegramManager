@@ -28,6 +28,8 @@ public class NewPostFragment extends Fragment {
 
         EditText messageField = view.findViewById(R.id.message_text);
 
+        messageField.requestFocus();
+
         chooseRecFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
