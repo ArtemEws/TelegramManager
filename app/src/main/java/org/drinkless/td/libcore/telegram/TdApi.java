@@ -5724,7 +5724,7 @@ public class TdApi {
     }
 
     /**
-     * A token for Microsoft Push Notification Service.
+     * A token for Microsoft Push Notification RestClient.
      */
     public static class DeviceTokenMicrosoftPush extends DeviceToken {
         /**
@@ -5762,7 +5762,7 @@ public class TdApi {
     }
 
     /**
-     * A token for Microsoft Push Notification Service VoIP channel.
+     * A token for Microsoft Push Notification RestClient VoIP channel.
      */
     public static class DeviceTokenMicrosoftPushVoIP extends DeviceToken {
         /**
@@ -5926,7 +5926,7 @@ public class TdApi {
     }
 
     /**
-     * A token for BlackBerry Push Service.
+     * A token for BlackBerry Push RestClient.
      */
     public static class DeviceTokenBlackBerryPush extends DeviceToken {
         /**
@@ -5964,7 +5964,7 @@ public class TdApi {
     }
 
     /**
-     * A token for Tizen Push Service.
+     * A token for Tizen Push RestClient.
      */
     public static class DeviceTokenTizenPush extends DeviceToken {
         /**
@@ -24648,7 +24648,7 @@ public class TdApi {
     }
 
     /**
-     * Service notification from the server. Upon receiving this the client must show a popup with the content of the notification.
+     * RestClient notification from the server. Upon receiving this the client must show a popup with the content of the notification.
      */
     public static class UpdateServiceNotification extends Update {
         /**
@@ -33247,7 +33247,7 @@ public class TdApi {
          */
         public String scope;
         /**
-         * Service's publicKey.
+         * RestClient's publicKey.
          */
         public String publicKey;
         /**
@@ -33270,7 +33270,7 @@ public class TdApi {
          *
          * @param botUserId User identifier of the service's bot.
          * @param scope Telegram Passport element types requested by the service.
-         * @param publicKey Service's publicKey.
+         * @param publicKey RestClient's publicKey.
          * @param nonce Authorization form nonce provided by the service.
          * @param password Password of the current user.
          */
