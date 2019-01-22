@@ -21,22 +21,25 @@
                                                      android:layout_height="match_parent">
             <TextView
                     android:text="@string/app_name"
-                    android:layout_width="200dp"
+                    android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:id="@+id/header_text"
-                    android:textSize="20sp"
+                    android:textSize="23sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="sans-serif-medium"
+            />
             <Button
                     android:background="@drawable/help_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:id="@+id/helper_button"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="15dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
             />
