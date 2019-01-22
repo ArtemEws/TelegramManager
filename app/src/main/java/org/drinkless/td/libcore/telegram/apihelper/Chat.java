@@ -73,4 +73,9 @@ public class Chat implements Comparable{
 
         return 0;
     }
+
+    public Message getLastMessage() {
+        if (chat.lastMessage == null) return null;
+        return new Message(chat.lastMessage);
+    }
 }
