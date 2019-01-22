@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.drinkless.td.libcore.telegram.apihelper.MessageSender.sendTextMessage;
+import static org.telegram.telegrammanager.APi.APiHelper.setDelay;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class ReceiversListFragment extends android.support.v4.app.Fragment {
@@ -29,7 +30,7 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
     private Context context;
     public static String TAG = ReceiversListFragment.class.getSimpleName();
     public static String message;
-
+    public static Boolean delayed;
     public ReceiversListFragment(){
     }
 
@@ -66,10 +67,10 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
                 for(Chat chat : chats){
-//                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
+                    if(delayed) {
                         groups.add(new ChatCard(chat, chat.getTitle(), 228, R.drawable.logo));
                         myChannels.add(chat);
-//                    }
+                    }
                 }
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
@@ -96,16 +97,32 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
         sendFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(receivers != null){
-                    for(Chat chat : receivers){
-                        sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
-                            if(type == "messageSent"){
-                                Toast.makeText(getActivity(), "Message sent successful!",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
+                if((!receivers.isEmpty()) && (!message.isEmpty())){
+//                    if(delayed){
+
+//
+//                        for(Chat chat : receivers){
+//                            sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
+//                                if(type == "messageSent"){
+//                                    Toast.makeText(getActivity(), "Message sent successful!",
+//                                            Toast.LENGTH_LONG).show();
+//                                }
+//                            });
+//                        }
+//
+//
+//                    } else {
+                        for(Chat chat : receivers){
+                            sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
+                                if(type == "messageSent"){
+                                    Toast.makeText(getActivity(), "Message sent successful!",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
                     }
-                }
+
+//                }
                 ChatListFragment clf = new ChatListFragment();
                 FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
                 fragmentManager.replace(R.id.main_fragment_container, clf);

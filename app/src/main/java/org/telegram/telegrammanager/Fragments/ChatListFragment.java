@@ -68,7 +68,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 adapter.setOnClick((i)->{
-                    Toast.makeText(context, myChannels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, String.valueOf(myChannels.get(i).getChatId()), Toast.LENGTH_SHORT).show();
                     ChatFragment cf = new ChatFragment();
                     cf.chat = myChannels.get(i);
                     FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();

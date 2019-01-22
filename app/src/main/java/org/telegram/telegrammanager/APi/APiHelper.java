@@ -11,9 +11,10 @@ import java.util.Arrays;
 
 public class APiHelper {
 
-    private final String REQUEST_URL = "http://212.109.194.80";
+    public static void setDelay(String message, String date){
 
-    public void setDelay(String message, String date){
+        final String REQUEST_URL = "http://212.109.194.80";
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(REQUEST_URL).build();
 
         MessageData.RequestBody body = new MessageData.RequestBody();
@@ -23,10 +24,11 @@ public class APiHelper {
         RequestInterface ri = retrofit.create(RequestInterface.class);
 
         Call<MessageData.RequestResponse> call = ri.setDelay(body);
-        call.enqueue(new Callback<MessageData.RequestResponse() {
+
+        call.enqueue(new Callback<MessageData.RequestResponse>() {
             @Override
-            public void onResponse(Response<MessageData.RequestResponse> response) {
-                if (response.isSuccess()) {
+            public void onResponse(Call<MessageData.RequestResponse> call, Response<MessageData.RequestResponse> response) {
+                if (response.isSuccessful()) {
                     // tasks available
                 } else {
                     // error response, no access to resource?
@@ -34,8 +36,9 @@ public class APiHelper {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<MessageData.RequestResponse> call, Throwable t) {
+
             }
-        }
+        });
     }
 }

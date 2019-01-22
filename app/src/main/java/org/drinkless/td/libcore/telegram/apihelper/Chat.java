@@ -57,6 +57,10 @@ public class Chat implements Comparable{
         return new FileManager.File(chat.photo.small);
     }
 
+    public long getChatId(){
+        return chat.id;
+    }
+
     public boolean hasPhoto() {
         return chat.photo != null;
     }

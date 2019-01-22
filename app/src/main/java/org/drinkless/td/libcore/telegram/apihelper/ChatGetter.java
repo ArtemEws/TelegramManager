@@ -15,7 +15,7 @@ public class ChatGetter {
      */
 
 
-    static void getChat(TClient t, long id, Handler fHandler) {
+    public static void getChat(TClient t, long id, Handler fHandler) {
         t.client.send(new TdApi.GetChat(id), new Client.ResultHandler() {
             @Override
             public void onResult(TdApi.Object object) {
@@ -23,10 +23,10 @@ public class ChatGetter {
                     case TdApi.Error.CONSTRUCTOR:
                         break;
                     case TdApi.Chat.CONSTRUCTOR:
-                        Chat chat = new Chat((TdApi.Chat)object);
+                        Chat chat = new Chat((TdApi.Chat) object);
                         if (chat.isSuperGroup()) {
                             getSuperGroupFromChat(t, chat, ((type, obj) -> {
-                                chat.superGroup = (SuperGroup)obj;
+                                chat.superGroup = (SuperGroup) obj;
                                 fHandler.handle("chat", chat);
                             }));
                         } else {
@@ -45,7 +45,7 @@ public class ChatGetter {
         Handler idsHandler = new Handler() {
             @Override
             public void handle(String type, Object obj) {
-                ArrayList<Long> ids = (ArrayList<Long>)obj;
+                ArrayList<Long> ids = (ArrayList<Long>) obj;
                 ArrayList<Chat> chats = new ArrayList<>();
                 for (int i = 0; i < ids.size(); i++) {
                     getChat(t, ids.get(i), new Handler() {
@@ -73,7 +73,7 @@ public class ChatGetter {
                 ArrayList<Long> ids = new ArrayList<>();
                 switch (object.getConstructor()) {
                     case TdApi.Chats.CONSTRUCTOR:
-                        long[] chatIds = ((TdApi.Chats)object).chatIds;
+                        long[] chatIds = ((TdApi.Chats) object).chatIds;
                         for (long id : chatIds)
                             ids.add(id);
                         idsHandler.handle("chatsids", ids);
@@ -87,7 +87,7 @@ public class ChatGetter {
 
     static void getSuperGroupFromChat(TClient t, Chat chat, Handler fHandler) {
         if (!chat.isSuperGroup()) fHandler.handle("ERROR", null);
-        long supergroupId = (((TdApi.ChatTypeSupergroup)chat.chat.type).supergroupId);
+        long supergroupId = (((TdApi.ChatTypeSupergroup) chat.chat.type).supergroupId);
 
         t.client.send(new TdApi.GetSupergroup((int) supergroupId), new Client.ResultHandler() {
             @Override
@@ -98,7 +98,7 @@ public class ChatGetter {
                         fHandler.handle("ERROR", null);
                         break;
                     case TdApi.Supergroup.CONSTRUCTOR:
-                        fHandler.handle("superGroup", new SuperGroup((TdApi.Supergroup)object));
+                        fHandler.handle("superGroup", new SuperGroup((TdApi.Supergroup) object));
                         break;
                     default:
                         break;
@@ -108,7 +108,7 @@ public class ChatGetter {
     }
 
     static void getChatMessages(TClient t, Chat chat, Handler fHandler) {
-        new Thread(()->{
+        new Thread(() -> {
 
             ArrayList<Message> messages = new ArrayList<>();
             AtomicLong lastMesId = new AtomicLong(0);
@@ -139,7 +139,7 @@ public class ChatGetter {
     static void getSomeMessages(TClient t, Chat chat, long mid, Handler fHandler) {
         t.client.send(new TdApi.GetChatHistory(chat.chat.id, mid, 0, 100, false), object -> {
             if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR) {
-                TdApi.Messages messages = (TdApi.Messages)object;
+                TdApi.Messages messages = (TdApi.Messages) object;
                 ArrayList<Message> ret = new ArrayList<>();
                 if (messages.messages.length == 0) {
                     fHandler.handle("chatMessages", ret);
@@ -149,6 +149,17 @@ public class ChatGetter {
                     }
                     fHandler.handle("chatMessages", ret);
                 }
+            } else {
+                fHandler.handle("ERROR", null);
+            }
+        });
+    }
+
+    public static void getLastMessage(TClient t, Chat chat, Handler fHandler) {
+        t.client.send(new TdApi.GetMessage(chat.chat.id, 0), object -> {
+            if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR) {
+                TdApi.Message message = (TdApi.Message) object;
+                fHandler.handle("lastMessage", message);
             } else {
                 fHandler.handle("ERROR", null);
             }
