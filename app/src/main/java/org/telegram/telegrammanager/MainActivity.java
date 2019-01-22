@@ -43,10 +43,11 @@ public class MainActivity extends Activity {
 
         checkForPermissions();
 
-        Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
-        startActivity(intent);
-
         tClient.setUpdatesHandler(new LoginHandler());
+        if (savedInstanceState == null) {
+            Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+            startActivity(intent);
+        }
     }
 
     public class LoginHandler implements Handler {

@@ -17,6 +17,9 @@ public class NewPostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_post,
                 container, false);
 
+//        fab.hide();
+
+//        view.findViewById(R.id.fab).hide();
         return view;
     }
 

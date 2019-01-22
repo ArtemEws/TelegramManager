@@ -1,11 +1,10 @@
 package org.telegram.telegrammanager.Fragments;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.Helpers.ChatListAdapter;
-import org.telegram.telegrammanager.MainActivity;
 import org.telegram.telegrammanager.Models.ChatCard;
 import org.telegram.telegrammanager.R;
 
@@ -74,7 +71,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                     ChatFragment cf = new ChatFragment();
                     cf.chat = myChannels.get(i);
                     FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
-                    fragmentManager.replace(R.id.frgmnt, cf);
+                    fragmentManager.replace(R.id.main_fragment_container, cf);
                     fragmentManager.commit();
                 });
                 rv.setAdapter(adapter);
@@ -89,9 +86,4 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
         return view;
         }
-
-    @UiThread
-    protected void dataSetChanged(ChatListAdapter adapter) {
-        adapter.notifyDataSetChanged();
-    }
 }
