@@ -1,13 +1,18 @@
 package org.telegram.telegrammanager.Helpers;
 
 import android.util.Log;
+import android.widget.Toast;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.drinkless.td.libcore.telegram.apihelper.Handler;
 import org.drinkless.td.libcore.telegram.apihelper.Message;
 
+import java.util.ArrayList;
+
 import static org.drinkless.td.libcore.telegram.apihelper.ChatGetter.getChat;
+import static org.drinkless.td.libcore.telegram.apihelper.ChatGetter.getChatAdmins;
 import static org.drinkless.td.libcore.telegram.apihelper.ChatGetter.getLastMessage;
 import static org.drinkless.td.libcore.telegram.apihelper.MessageSender.sendTextMessage;
+import static org.telegram.telegrammanager.APi.APiHelper.setDelay;
 import static org.telegram.telegrammanager.Helpers.RandomStringGenerator.generateString;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
@@ -74,11 +79,31 @@ public class BotManager {
             public void handle(String type, Object obj) {
                 if (type == "lastMessage") {
                     Message message = (Message) obj;
-                    String text = message.getMessageContent().getText();
-
+                    String text = message.getMessageContent().getText().substring(420, 465);
                 }
             }
         });
     }
 
+    public static void sendDelayedMessage(String message, String date, Chat chat){
+        getChatAdmins(tClient, chat, (type, obj) -> {
+            if (type == "adminIds"){
+                ArrayList<Integer> adminIds = (ArrayList<Integer>)obj;
+            }
+        });
+
+        setDelay(message, date, String.valueOf(chat.getChatId()));
+    }
+
+    public static void testFunc(){
+        getLastMessage(tClient, chat, new Handler() {
+            @Override
+            public void handle(String type, Object obj) {
+                if (type == "lastMessage") {
+                    Message message = (Message) obj;
+                    String text = message.getMessageContent().getText().substring(420, 465);
+                }
+            }
+        });
+    }
 }

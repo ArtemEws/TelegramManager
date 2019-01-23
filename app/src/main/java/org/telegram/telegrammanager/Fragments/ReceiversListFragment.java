@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.drinkless.td.libcore.telegram.apihelper.MessageSender.sendTextMessage;
 import static org.telegram.telegrammanager.APi.APiHelper.setDelay;
+import static org.telegram.telegrammanager.Helpers.BotManager.sendDelayedMessage;
 import static org.telegram.telegrammanager.Helpers.TGClient.tClient;
 
 public class ReceiversListFragment extends android.support.v4.app.Fragment {
@@ -31,7 +32,9 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
     public static String TAG = ReceiversListFragment.class.getSimpleName();
     public static String message;
     public static Boolean delayed;
-    public ReceiversListFragment(){
+    public static long time;
+
+    public ReceiversListFragment() {
     }
 
     public static ReceiversListFragment newInstance() {
@@ -64,20 +67,20 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
         ArrayList<Chat> receivers = new ArrayList<>();
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
-                ArrayList<Chat> chats = (ArrayList<Chat>)obj;
+                ArrayList<Chat> chats = (ArrayList<Chat>) obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
-                for(Chat chat : chats){
-                    if(delayed) {
+                for (Chat chat : chats) {
+//                    if (delayed) {
                         groups.add(new ChatCard(chat, chat.getTitle(), 228, R.drawable.logo));
                         myChannels.add(chat);
-                    }
+//                    }
                 }
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
-                adapter.setOnClick((i)->{
+                adapter.setOnClick((i) -> {
                     ChatCard chat = groups.get(i);
 
-                    if(!receivers.contains(chat.chat)){
+                    if (!receivers.contains(chat.chat)) {
                         groups.set(i, new ChatCard(chat.chat, chat.name, chat.subs, R.mipmap.checked));
                         receivers.add(chat.chat);
                     } else {
@@ -88,7 +91,7 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 });
                 rv.setAdapter(adapter);
                 done.set(true);
-                
+
             } else if (type == "ERROR") {
                 Log.e("Get Chat", type);
             }
@@ -97,32 +100,25 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
         sendFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((!receivers.isEmpty()) && (!message.isEmpty())){
-//                    if(delayed){
-
+                if ((!receivers.isEmpty()) && (!message.isEmpty())) {
+//                    if (delayed) {
 //
-//                        for(Chat chat : receivers){
-//                            sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
-//                                if(type == "messageSent"){
-//                                    Toast.makeText(getActivity(), "Message sent successful!",
-//                                            Toast.LENGTH_LONG).show();
-//                                }
-//                            });
+//                        for (Chat chat : receivers) {
+//                            sendDelayedMessage(message, String.valueOf(time), chat);
 //                        }
 //
-//
 //                    } else {
-                        for(Chat chat : receivers){
+                        for (Chat chat : receivers) {
                             sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
-                                if(type == "messageSent"){
+                                if (type == "messageSent") {
                                     Toast.makeText(getActivity(), "Message sent successful!",
                                             Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
-                    }
+//                    }
 
-//                }
+                }
                 ChatListFragment clf = new ChatListFragment();
                 FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
                 fragmentManager.replace(R.id.main_fragment_container, clf);
@@ -130,8 +126,17 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        while (!done.get()) {}
+        while (!done.get()) {
+        }
 
         return view;
-        }
+    }
+
+    public static void setTime(long milliseconds) {
+        time = milliseconds;
+    }
+
+    public static void setDelayStatus(boolean state) {
+        delayed = state;
+    }
 }

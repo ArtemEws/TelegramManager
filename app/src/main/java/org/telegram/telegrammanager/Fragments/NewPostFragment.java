@@ -19,6 +19,7 @@ import org.telegram.telegrammanager.MainActivity;
 import org.telegram.telegrammanager.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class NewPostFragment extends Fragment {
 
@@ -42,7 +43,6 @@ public class NewPostFragment extends Fragment {
         Button delayButton = view.findViewById(R.id.delay_button);
 
         delayButton.setOnClickListener(view12 -> {
-//            rvlf.delayed = !rvlf.delayed;
             Toast.makeText(getActivity(), "delayed",
                     Toast.LENGTH_LONG).show();
             new TimePickerDialog(view12.getContext(), t,
@@ -51,6 +51,12 @@ public class NewPostFragment extends Fragment {
                     .show();
         });
 
+        delayButton.setOnLongClickListener(view13 -> {
+            rvlf.setDelayStatus(false);
+            Toast.makeText(getActivity(), "delay disabled",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        });
         chooseRecFab.setOnClickListener(view1 -> {
             rvlf.message = messageField.getText().toString();
             FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
@@ -63,8 +69,11 @@ public class NewPostFragment extends Fragment {
     TimePickerDialog.OnTimeSetListener t = (view, hourOfDay, minute) -> {
         dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
         dateAndTime.set(Calendar.MINUTE, minute);
-        Toast.makeText(getActivity(), dateAndTime.toString(),
-                Toast.LENGTH_LONG).show();
+        long millisecond = dateAndTime.getTimeInMillis();
+        if(millisecond != new Date().getTime()){
+            rvlf.setTime(millisecond);
+            rvlf.setDelayStatus(true);
+        }
     };
 
 }

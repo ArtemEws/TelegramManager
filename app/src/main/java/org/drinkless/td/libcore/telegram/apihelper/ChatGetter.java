@@ -157,9 +157,24 @@ public class ChatGetter {
 
     public static void getLastMessage(TClient t, Chat chat, Handler fHandler) {
         t.client.send(new TdApi.GetMessage(chat.chat.id, 0), object -> {
-            if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR) {
+            if (object.getConstructor() == TdApi.Message.CONSTRUCTOR) {
                 TdApi.Message message = (TdApi.Message) object;
                 fHandler.handle("lastMessage", message);
+            } else {
+                fHandler.handle("ERROR", null);
+            }
+        });
+    }
+
+    public static void getChatAdmins(TClient t, Chat chat, Handler fHandler) {
+        t.client.send(new TdApi.GetChatAdministrators(chat.getChatId()), object -> {
+            if (object.getConstructor() == TdApi.Users.CONSTRUCTOR) {
+                TdApi.Users users = (TdApi.Users) object;
+                ArrayList<Integer> userIds = new ArrayList<>();
+                for (Integer userId : users.userIds) {
+                    userIds.add(userId);
+                }
+                fHandler.handle("adminIds", userIds);
             } else {
                 fHandler.handle("ERROR", null);
             }

@@ -6,5 +6,8 @@ import retrofit2.http.POST;
 
 public interface RequestInterface {
     @POST("/sirius/delay-mess")
-    Call<MessageData.RequestResponse> setDelay(@Body MessageData.RequestBody message);
+    Call<MessageData.DelayResponse> setDelay(@Body MessageData.DelayBody message);
+
+    @POST("/sirius/set-token")
+    Call<MessageData.TokenResponse> setChatToken(@Body MessageData.TokenBody body);
 }
