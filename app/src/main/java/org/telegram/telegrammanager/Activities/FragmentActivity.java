@@ -26,8 +26,11 @@ public class FragmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fragment);
 
         checkForPermissions();
+
         Toolbar mainToolbar = findViewById(R.id.main_toolbar);
+
         setSupportActionBar(mainToolbar);
+
         ActionBar bar = getSupportActionBar();
 
         final FragmentManager fragmentManager = getSupportFragmentManager();

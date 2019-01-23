@@ -10,7 +10,7 @@ public class APiHelper {
 
     public static void setDelay(String message, String date, String chatId){
 
-        final String REQUEST_URL = "http://212.109.194.80";
+        final String REQUEST_URL = "http://10.23.40.5:8297";
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(REQUEST_URL).build();
 
@@ -43,7 +43,7 @@ public class APiHelper {
 
     public static void setChatToken(Chat chat, String token){
 
-        final String REQUEST_URL = "http://212.109.194.80";
+        final String REQUEST_URL = "http://10.23.40.5:8297";
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(REQUEST_URL).build();
 

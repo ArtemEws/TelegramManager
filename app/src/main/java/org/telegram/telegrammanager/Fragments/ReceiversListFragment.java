@@ -70,10 +70,15 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>) obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
                 for (Chat chat : chats) {
-//                    if (delayed) {
+                    if (delayed) {
+                        if(chat.isSuperGroup() && chat.isSuperGroupAdmin()){
+                            groups.add(new ChatCard(chat, chat.getTitle(), 228, R.drawable.logo));
+                            myChannels.add(chat);
+                        }
+                    } else {
                         groups.add(new ChatCard(chat, chat.getTitle(), 228, R.drawable.logo));
                         myChannels.add(chat);
-//                    }
+                    }
                 }
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
@@ -97,33 +102,30 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        sendFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ((!receivers.isEmpty()) && (!message.isEmpty())) {
-//                    if (delayed) {
-//
-//                        for (Chat chat : receivers) {
-//                            sendDelayedMessage(message, String.valueOf(time), chat);
-//                        }
-//
-//                    } else {
-                        for (Chat chat : receivers) {
-                            sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
-                                if (type == "messageSent") {
-                                    Toast.makeText(getActivity(), "Message sent successful!",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-//                    }
+        sendFab.setOnClickListener(view1 -> {
+            if ((!receivers.isEmpty()) && (!message.isEmpty())) {
+                if (delayed) {
 
+                    for (Chat chat : receivers) {
+                        sendDelayedMessage(message, String.valueOf(time), chat);
+                    }
+
+                } else {
+                    for (Chat chat : receivers) {
+                        sendTextMessage(tClient, chat, message, (type, obj) -> {
+                            if (type == "messageSent") {
+                                Toast.makeText(getActivity(), "Message sent successful!",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                 }
-                ChatListFragment clf = new ChatListFragment();
-                FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
-                fragmentManager.replace(R.id.main_fragment_container, clf);
-                fragmentManager.commit();
+
             }
+            ChatListFragment clf = new ChatListFragment();
+            FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
+            fragmentManager.replace(R.id.main_fragment_container, clf);
+            fragmentManager.commit();
         });
 
         while (!done.get()) {
