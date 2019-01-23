@@ -13,6 +13,7 @@ import org.telegram.telegrammanager.R;
 
 public class NewPostFragment extends Fragment {
 
+    public static String TAG = NewPostFragment.class.getSimpleName();
     ReceiversListFragment rvlf = new ReceiversListFragment();
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -35,6 +36,7 @@ public class NewPostFragment extends Fragment {
                 rvlf.message = messageField.getText().toString();
                 FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
                 fragmentManager.replace(R.id.main_fragment_container, rvlf);
+                fragmentManager.addToBackStack(NewPostFragment.TAG);
                 fragmentManager.commit();
             }
         });

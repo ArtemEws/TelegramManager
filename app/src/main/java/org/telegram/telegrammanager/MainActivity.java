@@ -65,10 +65,12 @@ public class MainActivity extends Activity {
 
                     tClient.setUpdatesHandler(new MultiHandler());
                     Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
                 } else if (state == AuthorizationManager.WAIT_PHONE_NUMBER) {
                     Intent intent = new Intent(MainActivity.this, GreetingActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
 

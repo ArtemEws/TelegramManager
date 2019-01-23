@@ -26,7 +26,7 @@ public class FragmentActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(view -> fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
-                new NewPostFragment()).commit());
+                new NewPostFragment(),NewPostFragment.TAG).addToBackStack(ChatListFragment.TAG).commit());
 
         if (savedInstanceState == null) {
             fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
@@ -34,14 +34,5 @@ public class FragmentActivity extends AppCompatActivity {
                                                         ChatListFragment.TAG).commit();
         }
     }
-
-//    TODO
-    @Override
-    public void onBackPressed() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-
-        fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
-                new ChatListFragment(),
-                ChatListFragment.TAG).commit();
-    }
+    
 }
