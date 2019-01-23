@@ -4,6 +4,7 @@ package org.telegram.telegrammanager.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.drinkless.td.libcore.telegram.apihelper.Handler;
@@ -112,14 +114,26 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                         Toast.LENGTH_LONG).show();
 
                 ChatListFragment clf = new ChatListFragment();
-                FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
-                fragmentManager.replace(R.id.main_fragment_container, clf);
-                fragmentManager.commit();
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.main_fragment_container, clf)
+                        .commit();
+                fragmentManager.popBackStack();
+                fragmentManager.popBackStack();
             }
         });
 
         while (!done.get()) {}
 
         return view;
-        }
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        TextView header_text = getActivity().findViewById(R.id.header_text);
+        header_text.setText("Выберите получателей");
+    }
 }

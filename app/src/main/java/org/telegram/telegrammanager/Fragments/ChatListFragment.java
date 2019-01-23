@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.telegram.telegrammanager.Helpers.ChatListAdapter;
@@ -96,5 +97,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
             super.onResume();
             FloatingActionButton fab = getActivity().findViewById(R.id.fab);
             fab.show();
+            TextView header_text = getActivity().findViewById(R.id.header_text);
+            header_text.setText(R.string.app_name);
         }
 }

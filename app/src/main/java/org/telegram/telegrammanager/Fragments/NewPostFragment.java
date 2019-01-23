@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import org.telegram.telegrammanager.R;
 
 public class NewPostFragment extends Fragment {
@@ -45,5 +47,11 @@ public class NewPostFragment extends Fragment {
         return view;
     }
 
+    public void onResume() {
+        super.onResume();
+
+        TextView header_text = getActivity().findViewById(R.id.header_text);
+        header_text.setText("Новый пост");
+    }
 
 }
