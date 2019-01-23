@@ -41,7 +41,7 @@ public class AuthorizationManager implements Client.ResultHandler {
         switch (as.getConstructor()) {
             case TdApi.AuthorizationStateWaitTdlibParameters.CONSTRUCTOR:
                 TdApi.TdlibParameters parameters = new TdApi.TdlibParameters();
-                parameters.databaseDirectory = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TelegramManager";
+                parameters.databaseDirectory = "/data/data/org.telegram.telegrammanager";
                 parameters.useMessageDatabase = true;
                 parameters.useSecretChats = true;
                 parameters.apiId = 648877;
