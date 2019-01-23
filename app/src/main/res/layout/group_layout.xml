@@ -46,6 +46,7 @@
             <TextView
                     android:id="@+id/group_name"
                     android:text="Рикардо Milos"
+                    android:singleLine="true"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"

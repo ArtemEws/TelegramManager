@@ -75,6 +75,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                     cf.chat = myChannels.get(i);
                     FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
                     fragmentManager.replace(R.id.main_fragment_container, cf);
+                    fragmentManager.addToBackStack(ChatListFragment.TAG);
                     fragmentManager.commit();
                 });
                 rv.setAdapter(adapter);

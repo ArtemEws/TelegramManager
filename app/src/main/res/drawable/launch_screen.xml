@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+
+
+    <item android:drawable="@color/colorPrimaryDark"/>
+
+
+    <item
+            android:width="329dp"
+            android:height="149dp"
+            android:drawable="@drawable/text_logo"
+            android:gravity="center" />
+
+</layer-list>
