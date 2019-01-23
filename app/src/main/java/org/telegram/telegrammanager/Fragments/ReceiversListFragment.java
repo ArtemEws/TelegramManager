@@ -108,7 +108,7 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                     }
                 }
 
-                Toast.makeText(getActivity(), "Сообщени отправлены",
+                Toast.makeText(getActivity(), "Сообщения отправлены",
                         Toast.LENGTH_LONG).show();
 
                 ChatListFragment clf = new ChatListFragment();
