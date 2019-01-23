@@ -78,5 +78,11 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
+    public void onResume() {
+        super.onResume();
+
+        TextView header_text = getActivity().findViewById(R.id.header_text);
+        header_text.setText(chat.getTitle());
+    }
 
 }

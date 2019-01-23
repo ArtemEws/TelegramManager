@@ -37,15 +37,4 @@ public class FragmentActivity extends AppCompatActivity {
         }
     }
 
-//    TODO
-    @Override
-    public void onBackPressed() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-
-        ((TextView)findViewById(R.id.header_text)).setText(R.string.app_name);
-
-        fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
-                new ChatListFragment(),
-                ChatListFragment.TAG).commit();
-    }
 }
