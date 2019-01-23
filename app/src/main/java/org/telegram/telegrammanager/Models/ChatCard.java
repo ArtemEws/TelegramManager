@@ -6,12 +6,12 @@ public class ChatCard {
 
     public Chat chat;
     public String name;
-    public Integer subs;
+    public String lastMes;
     public Integer photoId;
 
-    public ChatCard(Chat chat, String name, Integer subs, int photoId) {
+    public ChatCard(Chat chat, String name, String lastMes, int photoId) {
         this.name = name;
-        this.subs = subs;
+        this.lastMes = lastMes;
         this.photoId = photoId;
         this.chat = chat;
     }

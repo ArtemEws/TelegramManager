@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import org.drinkless.td.libcore.telegram.apihelper.Chat;
 import org.drinkless.td.libcore.telegram.apihelper.Message;
 import org.telegram.telegrammanager.Helpers.MessageListAdapter;
@@ -40,6 +43,10 @@ public class ChatFragment extends Fragment {
                 container, false);
 
         context = view.getContext();
+
+        TextView header_text = getActivity().findViewById(R.id.header_text);
+        header_text.setText(chat.getTitle());
+
 
         RecyclerView rv = view.findViewById(R.id.messages_rv);
         rv.setHasFixedSize(true);

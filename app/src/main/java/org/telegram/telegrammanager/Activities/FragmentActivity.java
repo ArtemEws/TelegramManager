@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
+
 import org.telegram.telegrammanager.Fragments.ChatListFragment;
 import org.telegram.telegrammanager.Fragments.NewPostFragment;
 import org.telegram.telegrammanager.R;
@@ -34,5 +36,16 @@ public class FragmentActivity extends AppCompatActivity {
                                                         ChatListFragment.TAG).commit();
         }
     }
-    
+
+//    TODO
+    @Override
+    public void onBackPressed() {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        ((TextView)findViewById(R.id.header_text)).setText(R.string.app_name);
+
+        fragmentManager.beginTransaction().replace( R.id.main_fragment_container,
+                new ChatListFragment(),
+                ChatListFragment.TAG).commit();
+    }
 }

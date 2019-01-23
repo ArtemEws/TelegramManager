@@ -67,7 +67,10 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 ArrayList<Chat> myChannels = new ArrayList<>();
                 for(Chat chat : chats){
 //                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
-                        groups.add(new ChatCard(chat, chat.getTitle(), 228, R.drawable.logo));
+                        if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
+                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
+                        else
+                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
                         myChannels.add(chat);
 //                    }
                 }
@@ -77,10 +80,10 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                     ChatCard chat = groups.get(i);
 
                     if(!receivers.contains(chat.chat)){
-                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.subs, R.mipmap.checked));
+                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.mipmap.checked));
                         receivers.add(chat.chat);
                     } else {
-                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.subs, R.drawable.logo));
+                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.drawable.logo));
                         receivers.remove(chat.chat);
                     }
                     adapter.notifyItemChanged(i);
@@ -100,12 +103,14 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                     for(Chat chat : receivers){
                         sendTextMessage(tClient, chat, message, (Handler) (type, obj) -> {
                             if(type == "messageSent"){
-                                Toast.makeText(getActivity(), "Message sent successful!",
-                                        Toast.LENGTH_LONG).show();
                             }
                         });
                     }
                 }
+
+                Toast.makeText(getActivity(), "Сообщения отправлены",
+                        Toast.LENGTH_LONG).show();
+
                 ChatListFragment clf = new ChatListFragment();
                 FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
                 fragmentManager.replace(R.id.main_fragment_container, clf);

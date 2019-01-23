@@ -68,7 +68,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatCa
             }
         });
         chatCardViewHolder.groupName.setText(groupList.get(i).name);
-        chatCardViewHolder.groupSubScore.setText(groupList.get(i).subs.toString());
+        chatCardViewHolder.groupSubScore.setText(groupList.get(i).lastMes);
         chatCardViewHolder.groupImage.setImageResource(groupList.get(i).photoId);
     }
 
