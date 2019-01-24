@@ -72,7 +72,7 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 for (Chat chat : chats){
                     if (chat.isChannel() && chat.isSuperGroupAdmin()) {
                         if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
-                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), images[j]));
                         else
                             groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", images[j]));
                         myChannels.add(chat);
@@ -88,7 +88,7 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                         groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.mipmap.checked));
                         receivers.add(chat.chat);
                     } else {
-                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.drawable.logo));
+                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, images[i]));
                         receivers.remove(chat.chat);
                     }
                     adapter.notifyItemChanged(i);

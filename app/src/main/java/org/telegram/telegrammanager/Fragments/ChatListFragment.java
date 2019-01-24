@@ -66,7 +66,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
                 for(Chat chat : chats) {
                     if (chat.isChannel() && chat.isSuperGroupAdmin()) {
                         if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
-                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), images[j]));
                         else
                             groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", images[j]));
 
