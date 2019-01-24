@@ -56,7 +56,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
 
         AtomicBoolean done = new AtomicBoolean(false);
 
-        int images[] = {R.drawable.logo2, R.drawable.logo1, R.drawable.logo2, R.drawable.logo3};
+        int images[] = {R.drawable.logo3, R.drawable.logo1, R.drawable.logo2, R.drawable.logo3};
 
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
