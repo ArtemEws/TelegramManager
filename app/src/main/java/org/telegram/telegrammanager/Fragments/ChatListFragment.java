@@ -60,15 +60,16 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
-                for(Chat chat : chats){
-                    if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
-                        groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
-                    else
-                        groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
+                for(Chat chat : chats) {
+                    if (chat.isChannel() && chat.isSuperGroupAdmin()) {
+                        if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
+                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
+                        else
+                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
 
-                    myChannels.add(chat);
+                        myChannels.add(chat);
+                    }
                 }
-
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 adapter.setOnClick((i)->{
                     Toast.makeText(context, myChannels.get(i).getTitle(), Toast.LENGTH_SHORT).show();

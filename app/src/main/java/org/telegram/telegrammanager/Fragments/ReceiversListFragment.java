@@ -68,13 +68,13 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
                 for(Chat chat : chats){
-//                    if(chat.isSuperGroup() && chat.isSuperGroupAdmin()) {
+                    if(chat.isChannel() && chat.isSuperGroupAdmin()) {
                         if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
                             groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
                         else
                             groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
                         myChannels.add(chat);
-//                    }
+                    }
                 }
 
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
