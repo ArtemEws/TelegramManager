@@ -61,19 +61,22 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
 
         AtomicBoolean done = new AtomicBoolean(false);
 
+        int images[] = {R.drawable.logo2, R.drawable.logo1, R.drawable.logo2, R.drawable.logo3};
 
         ArrayList<Chat> receivers = new ArrayList<>();
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
-                for(Chat chat : chats){
-                    if(chat.isChannel() && chat.isSuperGroupAdmin()) {
+                int j = 0;
+                for (Chat chat : chats){
+                    if (chat.isChannel() && chat.isSuperGroupAdmin()) {
                         if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
                             groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
                         else
-                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", images[j]));
                         myChannels.add(chat);
+                        j++;
                     }
                 }
 
@@ -81,7 +84,7 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 adapter.setOnClick((i)->{
                     ChatCard chat = groups.get(i);
 
-                    if(!receivers.contains(chat.chat)){
+                    if (!receivers.contains(chat.chat)){
                         groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.mipmap.checked));
                         receivers.add(chat.chat);
                     } else {
