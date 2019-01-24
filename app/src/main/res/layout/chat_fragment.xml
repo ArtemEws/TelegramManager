@@ -9,7 +9,9 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@id/codeField"
+            android:layout_marginBottom="20dp"/>
 
     <EditText
             android:layout_width="332dp"
@@ -30,10 +32,10 @@
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="7dp"
             android:layout_marginRight="4dp"
+            app:layout_constraintStart_toEndOf="@id/codeField"
+            app:layout_constraintBottom_toBottomOf="parent"
             >
         <ImageView
                 android:layout_width="20dp"
