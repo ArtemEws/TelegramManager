@@ -56,7 +56,7 @@
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:srcCompat="@drawable/cl" android:scaleType="fitEnd"/>
     <TextView
-            android:text="Введите код из СМС:"
+            android:text="Введите код из Telegram:"
             android:textColor="@android:color/darker_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
