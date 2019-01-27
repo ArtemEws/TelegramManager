@@ -55,7 +55,7 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
         AtomicBoolean done = new AtomicBoolean(false);
-
+        //TODO убрать заглушки картинок
         int images[] = {R.drawable.logo3, R.drawable.logo1, R.drawable.logo2, R.drawable.logo3};
 
         tClient.getChats((type, obj) -> {
