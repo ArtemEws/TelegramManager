@@ -3,6 +3,7 @@ package org.telegram.telegrammanager.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,10 +48,14 @@ public class CodeActivity extends Activity {
                 if (state == AuthorizationManager.READY) {
                     Intent intent = new Intent(CodeActivity.this, MainActivity.class);
                     startActivity(intent);
-                } else if (type == "ERROR") {
-                    System.out.println("Error occured");
                 }
-            }
+                if (state == AuthorizationManager.WAIT_PASSWORD){
+                    Intent intent = new Intent(CodeActivity.this, PasswordActivity.class);
+                    startActivity(intent);
+                }
+            } else if (type == "ERROR") {
+                    Log.e("Authentication", "Error occured");
+                }
         }
     }
 }

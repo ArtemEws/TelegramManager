@@ -35,10 +35,10 @@
                     android:fontFamily="sans-serif-medium"
             />
             <Button
-                    android:background="@drawable/help_button"
+                    android:background="@drawable/exit_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:id="@+id/helper_button"
+                    android:id="@+id/exit_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="15dp"
                     app:layout_constraintTop_toTopOf="parent"
