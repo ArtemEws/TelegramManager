@@ -60,20 +60,24 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
         FloatingActionButton sendFab = view.findViewById(R.id.send_fab);
 
         AtomicBoolean done = new AtomicBoolean(false);
-
+        //TODO убрать заглушки картинок
+        int images[] = {R.drawable.logo3, R.drawable.logo1, R.drawable.logo2, R.drawable.logo3};
 
         ArrayList<Chat> receivers = new ArrayList<>();
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
-                for(Chat chat : chats){
-                    if(chat.isChannel() && chat.isSuperGroupAdmin()) {
+                int j = 0;
+                for (Chat chat : chats){
+                    if (chat.isChannel() && chat.isSuperGroupAdmin()) {
                         if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
-                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), images[j]));
                         else
-                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", images[j]));
                         myChannels.add(chat);
+                        j++;
+
                     }
                 }
 
@@ -81,11 +85,11 @@ public class ReceiversListFragment extends android.support.v4.app.Fragment {
                 adapter.setOnClick((i)->{
                     ChatCard chat = groups.get(i);
 
-                    if(!receivers.contains(chat.chat)){
+                    if (!receivers.contains(chat.chat)){
                         groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.mipmap.checked));
                         receivers.add(chat.chat);
                     } else {
-                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, R.drawable.logo));
+                        groups.set(i, new ChatCard(chat.chat, chat.name, chat.lastMes, images[i]));
                         receivers.remove(chat.chat);
                     }
                     adapter.notifyItemChanged(i);

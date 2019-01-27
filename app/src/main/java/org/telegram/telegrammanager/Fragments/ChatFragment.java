@@ -3,6 +3,7 @@ package org.telegram.telegrammanager.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -83,6 +84,9 @@ public class ChatFragment extends Fragment {
 
         TextView header_text = getActivity().findViewById(R.id.header_text);
         header_text.setText(chat.getTitle());
+
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        fab.hide();
     }
 
 }

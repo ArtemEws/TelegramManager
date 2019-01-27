@@ -50,16 +50,13 @@
 
         />
     <ImageView
+            android:src="@drawable/cl"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/cl"
-            android:id="@+id/imageView4"
-            android:scaleType="fitEnd"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_height="wrap_content" android:id="@+id/imageView4"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:srcCompat="@drawable/cl" android:scaleType="fitEnd"/>
     <TextView
-            android:text="Введите код из СМС:"
+            android:text="Введите код из Telegram:"
             android:textColor="@android:color/darker_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -55,24 +55,28 @@ public class ChatListFragment extends android.support.v4.app.Fragment {
         ArrayList<ChatCard> groups = new ArrayList<ChatCard>();
 
         AtomicBoolean done = new AtomicBoolean(false);
+        //TODO убрать заглушки картинок
+        int images[] = {R.drawable.logo3, R.drawable.logo1, R.drawable.logo2, R.drawable.logo3};
 
         tClient.getChats((type, obj) -> {
             if (type == "chats") {
                 ArrayList<Chat> chats = (ArrayList<Chat>)obj;
                 ArrayList<Chat> myChannels = new ArrayList<>();
+                int j = 0;
                 for(Chat chat : chats) {
                     if (chat.isChannel() && chat.isSuperGroupAdmin()) {
                         if (chat.getTitle() != null && chat.getLastMessage() != null && chat.getLastMessage().getMessageContent().isText())
-                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), chat.getLastMessage().getMessageContent().getText(), images[j]));
                         else
-                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", R.drawable.logo));
+                            groups.add(new ChatCard(chat, chat.getTitle(), "Сообщение", images[j]));
 
                         myChannels.add(chat);
+                        j++;
                     }
                 }
                 ChatListAdapter adapter = new ChatListAdapter(context, groups);
                 adapter.setOnClick((i)->{
-                    Toast.makeText(context, myChannels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, myChannels.get(i).getTitle(), Toast.LENGTH_SHORT).show();
                     ChatFragment cf = new ChatFragment();
                     cf.chat = myChannels.get(i);
                     FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
